@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>wowforeverrules</title>
+<meta name="description" content="Regler, gubbar, veckoreset och övningsspel för vår WoW Forever-grupp.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WoW Forever-gruppen">
+<meta property="og:description" content="Regler, gubbar, veckoreset och övningsspel för vår WoW Forever-grupp.">
+<meta property="og:url" content="https://benbengtsson91-web.github.io/wowforeverrules/">
+<meta property="og:image" content="https://benbengtsson91-web.github.io/wowforeverrules/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="portal.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -218,6 +227,24 @@ button:disabled{opacity:.5;cursor:default}
 .ovbest{margin:0}
 body.ovplay .bk{display:none}
 @media(max-width:600px){.ovarena canvas{aspect-ratio:1/1}.ovpf{padding:6px 8px}.ovpf .ovrow span:not(.ovtag){display:none}.ovtabs button{padding:8px 12px;font-size:14px}}
+.fsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-bottom:14px}
+.fsum:empty{display:none}
+.fp{padding:14px 16px;border:1px solid var(--edge);border-radius:8px;background:#191410;display:grid;gap:2px}
+.fp b{font-family:Cinzel,serif;color:var(--gold);font-size:19px}
+.fp span{color:var(--muted)}
+.fp .owe{color:var(--red)}
+.fp .get{color:#6fdc8c}
+.fines{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:12px 16px;border:1px solid #3a2e1d;border-radius:8px;background:#191410}
+.fines li.empty{display:block;color:var(--muted);font-style:italic}
+.fines li.done{opacity:.6}
+.fines .who{font-weight:600}
+.fines .amt{font-family:Cinzel,serif;font-weight:700;color:var(--red);white-space:nowrap;text-align:right}
+.fines li.done .amt{color:var(--muted);text-decoration:line-through}
+.fines .meta{grid-column:1/-1;color:var(--muted);font-size:15px}
+.fines .paid{color:#6fdc8c}
+.fines .unpaid{color:var(--red)}
+@media(max-width:600px){.fsum{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.fp{padding:10px}.fp b{font-size:16px}.fp span{font-size:14px;line-height:1.3}}
 .bk{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:10px;pointer-events:none}
 .bk>*{pointer-events:auto}
 .bkfab{width:72px;height:72px;padding:0;border-radius:50%;border:2px solid var(--teal);background:#0f1d1b;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.55);transition:transform .15s}
@@ -248,7 +275,7 @@ body.ovplay .bk{display:none}
   <button id="skip" type="button">Hoppa över</button>
 </div>
 
-<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzking</a><a href="#ova">Öva</a><a href="#regler">Regler</a></nav></div></header>
+<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#gubbar">Gubbar</a><a href="#ova">Öva</a><a href="#boter">Böter</a><a href="#regler">Regler</a></nav></div></header>
 
 <section class="hero" id="top">
   <img class="scene" src="hero.jpg" width="1024" height="512" alt="Tre vandrare går uppför en stig mot en lysande portal i en ring av stenar">
@@ -260,6 +287,7 @@ body.ovplay .bk{display:none}
   <a class="tile" href="#gubbar"><svg viewBox="0 0 32 32"><path d="M16 3l10 4v8c0 7-5 11-10 14C11 26 6 22 6 15V7Z"/><path d="M16 10v10M11 15h10"/></svg><span class="tt">Våra gubbar</span><span class="ts" id="t-chars">Levlar</span></a>
   <a class="tile" href="#gosta"><svg viewBox="0 0 32 32"><path d="M6 19v-3a10 10 0 0 1 20 0v3"/><rect x="4" y="18" width="6" height="9" rx="2"/><rect x="22" y="18" width="6" height="9" rx="2"/><path d="M25 27c0 2-3 3-7 3"/></svg><span class="tt">Blizzking</span><span class="ts">Klicka för tips</span></a>
   <a class="tile" href="#ova"><svg viewBox="0 0 32 32"><path d="M6 26L22 10"/><path d="M19 7l6 6"/><path d="M26 26L10 10"/><path d="M13 7l-6 6"/></svg><span class="tt">Öva dina skills</span><span class="ts">Tank, heal eller DPS</span></a>
+  <a class="tile" href="#boter"><svg viewBox="0 0 32 32"><circle cx="13" cy="13" r="7"/><circle cx="20" cy="19" r="7"/><path d="M11 13h4M18 19h4"/></svg><span class="tt">Bötesliggaren</span><span class="ts" id="t-fines">Vem är skyldig vem</span></a>
   <a class="tile" href="#regler"><svg viewBox="0 0 32 32"><path d="M8 5h17a3 3 0 0 1 0 6H22v14a3 3 0 0 1-3 3H6a3 3 0 0 1 0-6h3V8a3 3 0 0 0-1-3Z"/><path d="M13 13h5M13 17h5M13 21h4"/></svg><span class="tt">Spelregler</span><span class="ts">8 regler att följa</span></a>
 </nav>
 
@@ -299,11 +327,17 @@ body.ovplay .bk{display:none}
 
 
 
+<section id="boter" class="band wrap">
+  <div class="sh"><h2>Bötesliggaren</h2><p>Vem är skyldig vem. Listan sköts av Alex, så säg till honom när någon får böter eller har betalat.</p></div>
+  <div class="fsum" id="fine-sum"></div>
+  <ol class="fines" id="fine-list"><li class="empty">Bötesliggaren laddas…</li></ol>
+</section>
+
 <section id="regler" class="band wrap">
   <div class="sh"><h2>Spelregler</h2><p>Gäller våra gruppgubbar. Böterna står i rött.</p></div>
   <div class="rules" id="rules-list">
-    <article class="rule panel"><span class="num">1</span><h3>Grundregeln</h3><p>Gruppgubbarna spelas bara när alla tre är med. Inte solo, inte bara två av er.</p></article>
-    <article class="rule panel"><span class="num">2</span><h3>Får alltid göras själv</h3><ul><li>Professions, cooking, fishing, first aid</li><li>Weapon skills på gråa mobs</li><li>AH, mail, bank, handla</li></ul><p class="note">XP av misstag är okej. Grinda, questa eller köra dungeons är det inte.</p></article>
+    <article class="rule panel"><span class="num">1</span><h3>Grundregeln</h3><p>Gruppgubbarna spelas när alla tre är med. Solo eller bara två av er är bara okej enligt regel 2, 3 och 7.</p></article>
+    <article class="rule panel"><span class="num">2</span><h3>Får alltid göras själv</h3><ul><li>Professions, cooking, fishing, first aid</li><li>Weapon skills på gråa mobs</li><li>AH, mail, bank, handla</li></ul><p class="note">XP av misstag är okej. Grinda eller köra dungeons själv är det inte, och för quests gäller regel 7.</p></article>
     <article class="rule panel"><span class="num">3</span><h3>Tillåtelse</h3><ul><li>Båda de andra måste säga ja i gruppchatten om man ska få spela själv.</li><li>Samma gäller om man ska spela 2</li><li>Max 1–2 levlar över den lägsta, sen stopp.</li><li>Ett ja gäller ett tillfälle.</li><li>Den som säger ja kan förvänta sig en liiiten present av båda spelarna som spelade.</li></ul></article>
     <article class="rule panel"><span class="num">4</span><h3>Straff</h3><ul><li><span class="fine">20 silver</span> till var och en av de andra, via mail inom 24 timmar.</li><li>Märker ingen något inom en dag är det preskriberat.</li><li>Hamnar man över levelgränsen väntar man in de andra.</li><li>Kan man inte spela på en torsdag blir det <span class="fine">20 s i böter</span> till den eller de som kan spela, om man inte kommit överens om att byta speldagen till en annan dag.</li></ul></article>
     <article class="rule panel"><span class="num">5</span><h3>Ingen YouTube eller googling</h3><p>Det är strikt förbjudet att kolla nyheter, guider eller hjälp på YouTube eller Google.</p><ul><li>Undantag: lite tips om hur man spelar sin gubbe. Inte mer än så.</li><li>Straff: <span class="fine">50 silver</span>.</li><li>Råkar man se något måste man ha en utomordentlig förklaring till varför man fortsatte kolla.</li></ul></article>
@@ -413,6 +447,20 @@ $('#plate').addEventListener('click',async e=>{
   }
 });
 renderChars();
+
+/* Bötesliggaren */
+const fmtS=v=>{v=Math.max(0,Math.round(Number(v)||0));const g=Math.floor(v/100),r=v%100;return g?(g+'g'+(r?' '+r+'s':'')):r+'s'};
+let fines=null;
+function renderFines(){
+  const list=$('#fine-list'),sum=$('#fine-sum');if(!list)return;
+  if(!fines){return}
+  const items=fines.filter(f=>f&&f.who&&Number(f.amount)>0);const open=items.filter(f=>!f.paid);
+  $('#t-fines').textContent=open.length?`${open.length} obetald${open.length===1?'':'a'}`:'Inga skulder';
+  const P={};const add=(n,k,v)=>{n=String(n).slice(0,20);P[n]=P[n]||{owe:0,get:0};P[n][k]+=v};
+  for(const f of open){const to=(Array.isArray(f.to)?f.to:[f.to]).filter(Boolean);for(const t of to){add(f.who,'owe',Number(f.amount));add(t,'get',Number(f.amount))}}
+  sum.innerHTML=Object.keys(P).map(n=>`<div class="fp"><b>${esc(n)}</b><span class="owe">Är skyldig ${fmtS(P[n].owe)}</span><span class="get">Ska få ${fmtS(P[n].get)}</span></div>`).join('');
+  list.innerHTML=items.length?items.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).map(f=>{const to=(Array.isArray(f.to)?f.to:[f.to]).filter(Boolean);return `<li class="${f.paid?'done':''}"><span class="who">${esc(f.who)} → ${to.map(esc).join(' och ')}</span><span class="amt">${fmtS(f.amount)}${to.length>1?' var':''}</span><span class="meta">${esc(f.reason||'')}${f.date?' · '+esc(f.date):''} · ${f.paid?'<span class="paid">Betald</span>':'<span class="unpaid">Obetald</span>'}</span></li>`}).join(''):'<li class="empty">Inga böter registrerade ännu. Snyggt jobbat!</li>';
+}
 
 /* Öva dina skills: fyra mot en */
 {
@@ -698,6 +746,8 @@ $('#bk-close').addEventListener('click',()=>{bkSay.hidden=true;touched=true});
 for(const a of document.querySelectorAll('a[href="#gosta"]'))a.addEventListener('click',e=>{e.preventDefault();bkTip()});
 setTimeout(()=>{if(!touched)bkSay.hidden=true},15000);
 
+/* fines from fines.json */
+fetch('fines.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(b=>{fines=Array.isArray(b.items)?b.items:[];renderFines()}).catch(()=>{$('#fine-list').innerHTML='<li class="empty">Bötesliggaren går inte att läsa just nu.</li>'});
 /* levels from levels.json (updated twice a day) */
 canWrite=false;
 fetch('levels.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(b=>{

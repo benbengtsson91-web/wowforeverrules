@@ -14,7 +14,7 @@
    PICTURE night scene with three hooded travellers walking a path to a glowing stone portal; intro: the portal opening
    COLOUR fixed night palette: smoke-brown ground, parchment ink, guild gold, arcane teal for magic, ember red for fines
    TYPE Cinzel for headings, Crimson Pro for text
-   LAYOUT nav, full-width scene with title in its sky, menu tiles overlapping its foot, rules, characters, guestbook, Blizzgirl, footer; phone stacks */
+   LAYOUT nav, full-width scene with title in its sky, menu tiles overlapping its foot, rules, characters, guestbook, Blizzking, footer; phone stacks */
 :root{color-scheme:dark;--bg:#14100c;--panel:#1d1711;--deep:#100c09;--edge:#4d3c24;--gold:#d9b26a;--gold2:#a8874e;--ink:#efe4cf;--muted:#bba98a;--red:#ea7d60;--teal:#62d6c8;--teal2:#1d6a64}
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:68px;scroll-behavior:smooth;background:var(--bg)}
@@ -181,7 +181,7 @@ button:disabled{opacity:.5;cursor:default}
   <button id="skip" type="button">Hoppa över</button>
 </div>
 
-<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#regler">Regler</a><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzgirl</a></nav></div></header>
+<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#regler">Regler</a><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzking</a></nav></div></header>
 
 <section class="hero" id="top">
   <img class="scene" src="hero.jpg" width="1024" height="512" alt="Tre vandrare går uppför en stig mot en lysande portal i en ring av stenar">
@@ -192,7 +192,7 @@ button:disabled{opacity:.5;cursor:default}
 <nav class="menu wrap" aria-label="Snabbmeny">
   <a class="tile" href="#regler"><svg viewBox="0 0 32 32"><path d="M8 5h17a3 3 0 0 1 0 6H22v14a3 3 0 0 1-3 3H6a3 3 0 0 1 0-6h3V8a3 3 0 0 0-1-3Z"/><path d="M13 13h5M13 17h5M13 21h4"/></svg><span class="tt">Spelregler</span><span class="ts">8 regler att följa</span></a>
   <a class="tile" href="#gubbar"><svg viewBox="0 0 32 32"><path d="M16 3l10 4v8c0 7-5 11-10 14C11 26 6 22 6 15V7Z"/><path d="M16 10v10M11 15h10"/></svg><span class="tt">Våra gubbar</span><span class="ts" id="t-chars">Levlar</span></a>
-  <a class="tile" href="#gosta"><svg viewBox="0 0 32 32"><path d="M6 19v-3a10 10 0 0 1 20 0v3"/><rect x="4" y="18" width="6" height="9" rx="2"/><rect x="22" y="18" width="6" height="9" rx="2"/><path d="M25 27c0 2-3 3-7 3"/></svg><span class="tt">Blizzgirl</span><span class="ts">Klicka för tips</span></a>
+  <a class="tile" href="#gosta"><svg viewBox="0 0 32 32"><path d="M6 19v-3a10 10 0 0 1 20 0v3"/><rect x="4" y="18" width="6" height="9" rx="2"/><rect x="22" y="18" width="6" height="9" rx="2"/><path d="M25 27c0 2-3 3-7 3"/></svg><span class="tt">Blizzking</span><span class="ts">Klicka för tips</span></a>
 </nav>
 
 <section id="regler" class="band wrap">
@@ -223,10 +223,10 @@ button:disabled{opacity:.5;cursor:default}
 
 <section id="gosta" class="band wrap">
   <div class="gs panel">
-    <button type="button" class="gpic" id="gosta-btn" aria-label="Klicka på Blizzgirl för ett tips"><img src="gosta.jpg" width="800" height="800" alt="Blizzgirl med glasögon och headset som vinkar"></button>
+    <button type="button" class="gpic" id="gosta-btn" aria-label="Klicka på Blizzking för ett tips"><img src="gosta.jpg" width="800" height="800" alt="Blizzking med huva och solglasögon vid datorn"></button>
     <div class="gtext">
-      <h2>Tips från Blizzgirl</h2>
-      <p class="small">Klicka på Blizzgirl så delar hon med sig av sin visdom.</p>
+      <h2>Tips från Blizzking</h2>
+      <p class="small">Klicka på Blizzking så delar han med sig av sin visdom.</p>
       <p class="bubble" id="gosta-say" aria-live="polite">Klicka på mig, jag har koll på allt!</p>
     </div>
   </div>
@@ -290,7 +290,7 @@ setInterval(()=>{renderWeek();if(curWeek()!==lastWeek){lastWeek=curWeek();render
 renderWeek();
 const raceOf=c=>{const t=String(c.cls||'').toLowerCase();return t.includes('tauren')?'tauren':t.includes('orc')?'orc':'undead'};
 const IMG={undead:'undead.jpg',orc:'orc.jpg',tauren:'tauren.jpg'};
-const ALT={undead:'Odöd trollkarl med lysande stav framför portalen',orc:'Grönhyad krigare med stor yxa framför portalen',tauren:'Tjurhövdad krigare i rustning med sköld och stridsklubba framför portalen'};
+const ALT={undead:'Odöd prästinna med ljusstav framför portalen',orc:'Grönhyad krigare med stor yxa framför portalen',tauren:'Tjurhövdad krigare i rustning med sköld och stridsklubba framför portalen'};
 for(const k in IMG){const im=new Image();im.src=IMG[k]}
 const nameOf=(c,i)=>esc(c.name)||'Gubbe '+(i+1);
 function renderChars(){
@@ -328,7 +328,7 @@ $('#plate').addEventListener('click',async e=>{
 });
 renderChars();
 
-/* Blizzgirl */
+/* Blizzking */
 const TIPS=['Calle kan verka lite vresig.','Lyssna inte på Jim, han snackar mest i nattmössan.','Calle har en tendens att gråta mycket.','Alex räknas som top tier healer.','Alex gjorde precis en crit heal på 1000! Wow!','Som det gamla talesättet säger: lita aldrig på en shaman.'];
 const EXTRA=['Kom ihåg regel 5: googla inte. 50 silver är 50 silver.','Reparera gearen innan ni går in i en dungeon.','Har någon inte loggat in på 4 dagar? Då gäller Slöfock-regeln.'];
 const say=$('#gosta-say');let lastTip='',clicks=[];

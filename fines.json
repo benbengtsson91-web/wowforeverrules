@@ -1,1 +1,1 @@
-{"items":[{"date":"2026-11-26","who":"Alex","to":["Calle","Jim"],"amount":15,"reason":"","paid":false}]}
+{"items":[{"date":"2026-11-26","who":"Alex","to":["Calle","Jim"],"amount":15,"reason":"","paid":true,"paidDate":"2026-11-26"}]}

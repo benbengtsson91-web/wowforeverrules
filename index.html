@@ -435,8 +435,8 @@ const TEAM=[
   {key:'heal',n:'Lumos',r:'Priest',max:100,spd:125,melee:false,auto:0,rate:9,thr:0,range:270}
 ];
 const ROLES={
-  tank:{me:0,help:'Du är Tao, warrior. Håll Stengolemen på dig: tryck 2 (Hån) om den springer mot någon annan, och 1 (Sköldblock) när Krossande slag laddas. Ibland skakar den av sig ditt hot, så håll koll. Gå ur de röda ringarna.',
-    ab:[{k:'block',n:'Sköldblock',d:'−80 % skada i 2 s',cd:7},{k:'taunt',n:'Hån',d:'Ta aggro direkt',cd:8}]},
+  tank:{me:0,help:'Du är Tao, warrior. Håll Stengolemen på dig: tryck 2 (Taunt) om den springer mot någon annan, och 1 (Sköldblock) när Krossande slag laddas. Ibland skakar den av sig ditt hot, så håll koll. Gå ur de röda ringarna.',
+    ab:[{k:'block',n:'Sköldblock',d:'−80 % skada i 2 s',cd:7},{k:'taunt',n:'Taunt',d:'Ta aggro direkt',cd:8}]},
   dps:{me:1,help:'Du är Görgo, shaman. Gör så mycket skada du kan: 1 är vapenattack nära golemen, 2 är en eldattack på avstånd. Golemen blir rasande efter 1,5 minut, så den måste falla innan dess. Slå inte för hårt för tidigt, då drar du aggro. Gå ur de röda ringarna.',
     ab:[{k:'weapon',n:'Vapenattack',d:'Nära golemen',gcd:true},{k:'fire',n:'Eldattack',d:'På avstånd, stor skada',cd:5}]},
   heal:{me:2,help:'Du är Lumos, priest. Välj en kompis genom att klicka på den (eller Q och E). 1 helar, 2 ger en skyddsbubbla. Stå still medan du helar, och håll dig nära gruppen. Gå ur de röda ringarna.',
@@ -479,7 +479,7 @@ function use(k){
   if(!S||!S.run)return;const m=me();if(!m.alive)return;const a=ROLES[role].ab.find(x=>x.k===k);if(!a)return;
   if((m.cd[k]||0)>0)return;if(a.gcd&&m.gcd>0)return;
   if(k==='block'){m.block=2;say('Skölden uppe!')}
-  if(k==='taunt'){const b=S.boss;const top=Math.max(...S.u.map(u=>u.threat));m.threat=top+400;b.tgt=m.i;b.taunt=3;say('Golemen vänder sig mot dig!','good');cheer('Där satt hånet!')}
+  if(k==='taunt'){const b=S.boss;const top=Math.max(...S.u.map(u=>u.threat));m.threat=top+400;b.tgt=m.i;b.taunt=3;say('Golemen vänder sig mot dig!','good');cheer('Där satt tauntet!')}
   if(k==='weapon'){if(!inMelee(m)){say('Gå närmare golemen.','bad');return}dmgBoss(m,rnd(55,70));S.fx.push({k:'slash',x:S.boss.x,y:S.boss.y,life:.25});m.gcd=1}
   if(k==='fire'){if(!inRange(m,S.boss,300)){say('För långt bort.','bad');return}S.fx.push({k:'bolt',x:m.x,y:m.y,tx:S.boss.x,ty:S.boss.y,life:.35,c:'#ff8a3a'});dmgBoss(m,rnd(150,180))}
   if(k==='heal'||k==='bubble'){
@@ -535,7 +535,7 @@ function update(dt){
     if(top&&top.i!==b.tgt){
       const was=b.tgt;b.tgt=top.i;
       if(top.me&&role!=='tank'){S.st.pulls++;say('Du drog aggro! Golemen kommer mot dig.','bad');cheer('Lugna ner dig, du tar aggro från Tao!',true)}
-      else if(role==='tank'&&was===me().i){say('Golemen springer mot '+top.n+'! Tryck 2.','bad');cheer('Hån på 2! Rädda '+top.n+'!',true)}
+      else if(role==='tank'&&was===me().i){say('Golemen springer mot '+top.n+'! Tryck 2.','bad');cheer('Taunt på 2! Rädda '+top.n+'!',true)}
     }
   }
   const tg=S.u[b.tgt];

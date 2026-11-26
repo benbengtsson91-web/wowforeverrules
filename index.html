@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wowforeverrules</title>
+<link rel="preload" as="image" href="portal.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE occasion: three friends' guild hall, warm, a little solemn and a little silly
+   IDEA a torch-lit guild notice board you reach by stepping through a portal
+   PICTURE night scene with three hooded travellers walking a path to a glowing stone portal; intro: the portal opening
+   COLOUR fixed night palette: smoke-brown ground, parchment ink, guild gold, arcane teal for magic, ember red for fines
+   TYPE Cinzel for headings, Crimson Pro for text
+   LAYOUT nav, full-width scene with title in its sky, menu tiles overlapping its foot, rules, characters, guestbook, Blizzgirl, footer; phone stacks */
+:root{color-scheme:dark;--bg:#14100c;--panel:#1d1711;--deep:#100c09;--edge:#4d3c24;--gold:#d9b26a;--gold2:#a8874e;--ink:#efe4cf;--muted:#bba98a;--red:#ea7d60;--teal:#62d6c8;--teal2:#1d6a64}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:68px;scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 "Crimson Pro",Georgia,serif;overflow-x:clip}
+h1,h2,h3{font-family:Cinzel,Georgia,serif;color:var(--gold);line-height:1.08;margin:0;font-weight:700;text-wrap:balance}
+p{margin:0}
+a{color:var(--gold)}
+button{font:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,4vw);padding-right:max(16px,4vw)}
+.small{font-size:15px;color:var(--muted)}
+.panel{background:linear-gradient(180deg,#221b14,var(--panel));border:1px solid var(--edge);border-radius:8px}
+
+/* intro portal */
+#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:radial-gradient(circle at 50% 52%,rgba(8,12,12,0) 0,rgba(6,7,8,.55) 70%),linear-gradient(180deg,rgba(6,8,10,.25),rgba(6,6,6,.7)),url(intro-bg.jpg) 50% 58%/cover no-repeat,#0b0907;animation:out .9s ease-in 4.2s forwards}
+#intro.skip{animation:out .45s ease-in forwards}
+#intro.gone{display:none}
+@keyframes out{to{opacity:0;transform:scale(1.5);visibility:hidden}}
+.portal{position:relative;width:min(76vw,400px,50vh);aspect-ratio:1;margin-top:1vh}
+.pglow{position:absolute;inset:6%;border-radius:50%;background:radial-gradient(circle,rgba(98,214,200,.42),rgba(98,214,200,0) 70%);opacity:0;animation:fade 1s .5s forwards}
+.pgrow{position:absolute;inset:0;transform:scale(.2);opacity:0;animation:open 1.4s cubic-bezier(.2,.8,.2,1) .3s forwards}
+.pimg{position:absolute;left:0;top:0;width:100%;height:100%;animation:spin 48s linear infinite}
+.pimg.p2{left:20%;top:20%;width:60%;height:60%;opacity:.55;animation:spin 13s linear infinite reverse}
+@keyframes open{to{transform:scale(1);opacity:1}}
+.portal svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.flash{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 46%,#eafffb 0,rgba(98,214,200,.55) 35%,transparent 70%);opacity:0;animation:flash .8s ease-out 3.7s forwards}
+.conn{text-shadow:0 2px 6px #000;position:absolute;bottom:calc(15% - 26px);left:50%;width:min(260px,70vw);transform:translateX(-50%);height:56px;text-align:center;font-family:Cinzel,serif;font-size:19px}
+.conn p{position:absolute;inset:0 0 auto;margin:0}
+.c1{color:var(--gold);opacity:0;animation:fade .6s .5s forwards,gone .3s 3s forwards}
+.c2{color:var(--teal);font-weight:700;opacity:0;animation:fade .35s 3.15s forwards}
+.cbar{position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:2px;background:#2a2117;overflow:hidden;opacity:0;animation:fade .4s .5s forwards}
+.cbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold2),var(--teal));transform:scaleX(0);transform-origin:left;animation:load 2.5s cubic-bezier(.4,0,.2,1) .6s forwards}
+@keyframes gone{to{opacity:0}}
+@keyframes load{60%{transform:scaleX(.72)}to{transform:scaleX(1)}}
+.embers{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.embers span{position:absolute;bottom:-8px;width:3px;height:3px;border-radius:50%;background:#f3c784;box-shadow:0 0 6px 2px rgba(240,150,70,.55);opacity:0;animation:ember linear infinite}
+@keyframes ember{0%{transform:translate(0,0);opacity:0}12%{opacity:.9}100%{transform:translate(var(--dx),-92vh);opacity:0}}
+.inames{position:absolute;bottom:calc(15% + 48px);text-shadow:0 2px 8px #000;left:0;right:0;display:flex;justify-content:center;gap:clamp(14px,4vw,40px);font-family:Cinzel,serif;font-weight:700;font-size:clamp(20px,3vw,28px);color:var(--ink)}
+.inames span{opacity:0;animation:fade .7s forwards}
+.inames span:nth-child(1){animation-delay:1.9s}.inames span:nth-child(2){animation-delay:2.25s}.inames span:nth-child(3){animation-delay:2.6s}
+#skip{position:absolute;right:16px;bottom:16px;min-height:44px;padding:8px 16px;background:transparent;border:1px solid var(--edge);border-radius:6px;color:var(--muted);cursor:pointer}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes grow{to{transform:scale(1)}}
+@keyframes flash{40%{opacity:.9}100%{opacity:0}}
+
+/* nav + hero */
+.nav{position:sticky;top:0;z-index:20;background:rgba(18,14,10,.94);border-bottom:1px solid var(--edge)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;flex-wrap:wrap}
+.brand{font-family:Cinzel,serif;font-weight:700;color:var(--gold);text-decoration:none;font-size:19px}
+.nav nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav nav a{color:var(--ink);text-decoration:none;padding:10px 10px;border-radius:6px;font-size:17px}
+.nav nav a:hover,.nav nav a:focus-visible{background:#2a2117;color:var(--gold)}
+.hero{position:relative;height:clamp(400px,46vw,540px);overflow:hidden}
+.scene{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:55% 45%}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,12,.72) 0,rgba(10,10,12,.3) 42%,rgba(10,10,12,0) 66%),linear-gradient(180deg,rgba(20,16,12,0) 62%,rgba(20,16,12,.95) 100%)}
+.herotext{position:relative;padding-top:clamp(28px,5vw,64px)}
+.hero h1{font-size:clamp(34px,4.6vw,54px);max-width:12em}
+.hero h1,.sh h2,.gtext h2{font-family:"Cinzel Decorative",Cinzel,Georgia,serif;font-weight:900;color:#e6c27a;text-shadow:0 -1px 0 rgba(0,0,0,.9),0 1px 0 rgba(255,231,176,.28),0 0 18px rgba(98,214,200,.16)}
+.lede{margin-top:12px;font-size:20px;color:var(--muted);max-width:24em}
+.pring{transform-box:fill-box;transform-origin:center;animation:spin 12s linear infinite}
+.menu{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:-52px}
+.tile{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:16px;text-decoration:none;color:var(--ink);background:linear-gradient(180deg,#261e16,#1a140f);border:1px solid var(--edge);border-radius:8px;min-height:84px;transition:transform .15s,border-color .15s}
+.tile:hover,.tile:focus-visible{border-color:var(--gold);transform:translateY(-2px);outline:none}
+.tile svg{grid-row:span 2;width:34px;height:34px;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tt{font-family:Cinzel,serif;font-weight:700;color:var(--gold);font-size:18px}
+.ts{font-size:16px;color:var(--muted)}
+
+/* sections */
+.band{padding-top:clamp(40px,6vw,80px)}
+.sh{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;margin-bottom:20px}
+.sh h2{font-size:clamp(30px,3.6vw,42px)}
+.sh p{color:var(--muted);max-width:34em}
+.rules{columns:2 400px;column-gap:16px}
+.rule{break-inside:avoid;position:relative;margin:0 0 16px;padding:18px 22px 18px 76px}
+.num{position:absolute;left:20px;top:16px;width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;font-family:Cinzel,serif;font-weight:700;color:var(--gold);background:var(--deep)}
+.rule h3{font-size:20px;margin:8px 0 8px}
+.rule ul{list-style:none;margin:6px 0 0;padding:0}
+.rule li{position:relative;padding-left:20px;margin:5px 0}
+.rule li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;background:var(--gold2);transform:rotate(45deg)}
+.rule .note{margin-top:8px;color:var(--muted);font-style:italic}
+.rule.new{border-color:var(--gold2)}
+.tag{font-family:Crimson Pro,serif;font-size:14px;font-weight:600;color:var(--bg);background:var(--gold);border-radius:4px;padding:1px 7px;margin-left:8px;vertical-align:middle}
+.fine{color:var(--red);font-weight:600;white-space:nowrap}
+b{color:#f5d999;font-weight:600}
+.week{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 28px;margin-bottom:16px;padding:14px 20px;border:1px solid var(--edge);border-radius:8px;background:#16110d}
+#cd{display:block;font-family:Cinzel,serif;font-size:clamp(24px,3vw,30px);color:var(--teal);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wk{max-width:40em}
+.wk.over{color:var(--red)}
+.cs{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);grid-template-areas:"stage slots" "plate slots";overflow:hidden}
+.stage{grid-area:stage;background:radial-gradient(ellipse at 50% 60%,#16241f 0,#100c09 72%);border-right:1px solid var(--edge)}
+.stage img{display:block;width:100%;aspect-ratio:4/3;height:auto;object-fit:cover}
+#stage-char.in{animation:rise .5s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.plate{grid-area:plate;padding:18px 22px 22px;display:grid;gap:10px;border-top:1px solid var(--edge);border-right:1px solid var(--edge);background:#16110d}
+.plate h3{font-size:clamp(26px,3vw,34px)}
+.meta{color:var(--muted);font-size:19px}
+.acts{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.slots{grid-area:slots;list-style:none;margin:0;padding:16px;display:grid;gap:10px;align-content:start}
+.slot{width:100%;display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:center;text-align:left;padding:10px 12px;min-height:84px;background:#191410;border:1px solid #3a2e1d;border-radius:8px;color:var(--ink);cursor:pointer}
+.slot:hover{border-color:var(--gold2)}
+.slot.on{border-color:var(--gold);background:linear-gradient(90deg,#2c2216,#1a1410)}
+.face{grid-row:span 2;width:64px;height:64px;border-radius:50%;background-color:#0c0a08;background-size:520%;background-position:50% 2%;background-repeat:no-repeat;border:1px solid var(--edge)}
+.slot.on .face{border-color:var(--teal)}
+.sn{font-family:Cinzel,serif;font-weight:700;color:var(--gold);font-size:18px;align-self:end}
+.sl{font-size:16px;color:var(--muted);align-self:start}
+.char{padding:20px;display:grid;gap:12px;align-content:start}
+.chead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.char h3{font-size:22px}
+.cls{color:var(--muted);margin-top:4px}
+.lvl{text-align:right}
+.lvl span{display:block;font-size:14px;color:var(--muted)}
+.lvl b{font-family:Cinzel,serif;font-size:46px;line-height:1;color:var(--gold)}
+.bar{height:10px;border-radius:5px;background:var(--deep);border:1px solid var(--edge);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold))}
+.pill{justify-self:start;font-size:15px;padding:2px 10px;border-radius:999px;border:1px solid var(--edge);color:var(--muted)}
+.pill.low{border-color:var(--teal2);color:var(--teal)}
+.pill.over{border-color:var(--red);color:var(--red)}
+.plate label,.gbform label{font-size:15px;color:var(--muted)}
+input,textarea{width:100%;font:17px/1.4 "Crimson Pro",Georgia,serif;color:var(--ink);background:var(--deep);border:1px solid var(--edge);border-radius:6px;padding:10px 12px}
+textarea{resize:vertical;min-height:96px}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.btn,.plate button,.gbform button,.kgform button{min-height:44px;padding:8px 18px;border-radius:6px;border:1px solid var(--gold);background:var(--gold);color:#1a130b;font-family:Cinzel,serif;font-weight:700;font-size:15px;cursor:pointer}
+.plate .ghost,.ghost{background:transparent;color:var(--gold)}
+.plate .sm{min-height:40px;padding:6px 14px}
+button:disabled{opacity:.5;cursor:default}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.lvnote{margin-top:12px}
+.arm{font-size:16px;padding:8px 0}
+.gbgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:16px;align-items:start}
+.gbform{padding:20px;display:grid;gap:8px}
+.gblist{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-height:560px;overflow-y:auto}
+.gblist li{padding:14px 18px;background:#191410;border:1px solid #3a2e1d;border-radius:8px}
+.gblist .empty{color:var(--muted);font-style:italic}
+.mh{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mh time{font-size:15px;color:var(--muted);white-space:nowrap}
+.gblist p{margin-top:4px;overflow-wrap:anywhere}
+.link{background:none;border:0;padding:6px 0 0;color:var(--muted);font-size:15px;cursor:pointer;text-decoration:underline}
+.gs{display:grid;grid-template-columns:minmax(180px,300px) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:center;padding:clamp(16px,2.5vw,28px)}
+.gpic{padding:0;border:2px solid var(--edge);border-radius:14px;overflow:hidden;background:none;cursor:pointer;aspect-ratio:1;transition:transform .15s,border-color .15s}
+.gpic img{display:block;width:100%;height:100%;object-fit:cover}
+.gpic:hover{border-color:var(--teal)}
+.gpic:active{transform:scale(.97)}
+.gtext{display:grid;gap:10px}
+.gtext h2{font-size:clamp(28px,3.4vw,40px)}
+.bubble{position:relative;margin-top:8px;padding:18px 22px;background:#0f1d1b;border:1px solid var(--teal2);border-radius:12px;font-size:clamp(20px,2.2vw,24px);line-height:1.35;min-height:96px;display:flex;align-items:center}
+.bubble::before{content:"";position:absolute;left:-9px;top:36px;width:16px;height:16px;background:#0f1d1b;border-left:1px solid var(--teal2);border-bottom:1px solid var(--teal2);transform:rotate(45deg)}
+.bubble.pop{animation:pop .3s ease-out}
+.bubble.warn{border-color:var(--red);color:#ffd9cc}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-top:28px;padding-bottom:36px;margin-top:clamp(40px,6vw,80px);border-top:1px solid var(--edge);color:var(--muted);font-size:15px}
+@media(max-width:860px){.menu{grid-template-columns:repeat(2,minmax(0,1fr))}.cs{grid-template-columns:minmax(0,1fr);grid-template-areas:"stage" "slots" "plate"}.stage,.plate{border-right:0}.slots{grid-template-columns:repeat(3,minmax(0,1fr));padding:12px;gap:8px;border-top:1px solid var(--edge)}.slot{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;padding:10px 6px}.face{grid-row:auto;width:52px;height:52px}.sn{font-size:15px;align-self:auto}.sl{font-size:14px}.gbgrid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.brand{font-size:16px}.nav nav{gap:0}.nav nav a{font-size:16px;padding:10px 7px}.navin{gap:4px;flex-wrap:nowrap}.menu{margin-top:-40px;gap:10px}.tile{padding:12px;min-height:76px}.tile svg{width:28px;height:28px}.rule{padding:16px 16px 16px 64px}.num{left:14px;width:36px;height:36px}.hero{height:440px}.scene{object-position:40% 45%}.shade{background:linear-gradient(180deg,rgba(10,10,12,.75) 0,rgba(10,10,12,.2) 42%,rgba(10,10,12,0) 60%,rgba(20,16,12,.95) 100%)}.lede{font-size:18px}.gs{grid-template-columns:minmax(0,1fr)}.gpic{width:min(240px,70%);justify-self:center}.bubble::before{left:50%;top:-9px;margin-left:-8px;transform:rotate(135deg)}}
+@media(prefers-reduced-motion:reduce){#intro{display:none}#stage-char.in{animation:none}html{scroll-behavior:auto}.pring{animation:none}.tile{transition:none}.bubble.pop{animation:none}}
+</style>
+</head>
+<body>
+<div id="intro" aria-hidden="true">
+  <div class="portal"><div class="pglow"></div><div class="pgrow"><img class="pimg" src="portal.webp" width="800" height="800" alt=""><img class="pimg p2" src="portal.webp" width="800" height="800" alt=""></div></div>
+  <div class="embers" id="embers"></div>
+  <div class="flash"></div>
+  <p class="inames"><span>Lumos</span><span>Görgo</span><span>Tao</span></p>
+  <div class="conn"><p class="c1">Ansluter till gruppen…</p><p class="c2">Ansluten</p><div class="cbar"><i></i></div></div>
+  <button id="skip" type="button">Hoppa över</button>
+</div>
+
+<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#regler">Regler</a><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzgirl</a></nav></div></header>
+
+<section class="hero" id="top">
+  <img class="scene" src="hero.jpg" width="1024" height="512" alt="Tre vandrare går uppför en stig mot en lysande portal i en ring av stenar">
+  <div class="shade"></div>
+  <div class="wrap herotext"><h1>WoW Forever-gruppen</h1></div>
+</section>
+
+<nav class="menu wrap" aria-label="Snabbmeny">
+  <a class="tile" href="#regler"><svg viewBox="0 0 32 32"><path d="M8 5h17a3 3 0 0 1 0 6H22v14a3 3 0 0 1-3 3H6a3 3 0 0 1 0-6h3V8a3 3 0 0 0-1-3Z"/><path d="M13 13h5M13 17h5M13 21h4"/></svg><span class="tt">Spelregler</span><span class="ts">8 regler att följa</span></a>
+  <a class="tile" href="#gubbar"><svg viewBox="0 0 32 32"><path d="M16 3l10 4v8c0 7-5 11-10 14C11 26 6 22 6 15V7Z"/><path d="M16 10v10M11 15h10"/></svg><span class="tt">Våra gubbar</span><span class="ts" id="t-chars">Levlar</span></a>
+  <a class="tile" href="#gosta"><svg viewBox="0 0 32 32"><path d="M6 19v-3a10 10 0 0 1 20 0v3"/><rect x="4" y="18" width="6" height="9" rx="2"/><rect x="22" y="18" width="6" height="9" rx="2"/><path d="M25 27c0 2-3 3-7 3"/></svg><span class="tt">Blizzgirl</span><span class="ts">Klicka för tips</span></a>
+</nav>
+
+<section id="regler" class="band wrap">
+  <div class="sh"><h2>Spelregler</h2><p>Gäller våra gruppgubbar. Böterna står i rött.</p></div>
+  <div class="rules" id="rules-list">
+    <article class="rule panel"><span class="num">1</span><h3>Grundregeln</h3><p>Gruppgubbarna spelas bara när alla tre är med. Inte solo, inte bara två av er.</p></article>
+    <article class="rule panel"><span class="num">2</span><h3>Får alltid göras själv</h3><ul><li>Professions, cooking, fishing, first aid</li><li>Weapon skills på gråa mobs</li><li>AH, mail, bank, handla</li></ul><p class="note">XP av misstag är okej. Grinda, questa eller köra dungeons är det inte.</p></article>
+    <article class="rule panel"><span class="num">3</span><h3>Tillåtelse</h3><ul><li>Båda de andra måste säga ja i gruppchatten om man ska få spela själv.</li><li>Samma gäller om man ska spela 2</li><li>Max 1–2 levlar över den lägsta, sen stopp.</li><li>Ett ja gäller ett tillfälle.</li><li>Den som säger ja kan förvänta sig en liiiten present av båda spelarna som spelade.</li></ul></article>
+    <article class="rule panel"><span class="num">4</span><h3>Straff</h3><ul><li><span class="fine">20 silver</span> till var och en av de andra, via mail inom 24 timmar.</li><li>Märker ingen något inom en dag är det preskriberat.</li><li>Hamnar man över levelgränsen väntar man in de andra.</li><li>Kan man inte spela på en torsdag blir det <span class="fine">20 s i böter</span> till den eller de som kan spela.</li></ul></article>
+    <article class="rule panel"><span class="num">5</span><h3>Ingen YouTube eller googling</h3><p>Det är strikt förbjudet att kolla nyheter, guider eller hjälp på YouTube eller Google.</p><ul><li>Undantag: lite tips om hur man spelar sin gubbe. Inte mer än så.</li><li>Straff: <span class="fine">50 silver</span>.</li><li>Råkar man se något måste man ha en utomordentlig förklaring till varför man fortsatte kolla.</li></ul></article>
+    <article class="rule panel"><span class="num">6</span><h3>Lämna in quests</h3><ul><li>Man får själv lämna in quests som man har klarat.</li><li>Dingar man på det måste man säga till de andra. Inget straff.</li></ul></article>
+    <article class="rule panel new"><span class="num">7</span><h3>Quest-levla själv<span class="tag">Ny</span></h3><ul><li>Man får quest-levla själv, men max 2 levlar över den som är lägst.</li><li>Bryter man mot det: <span class="fine">6 guld i böter</span>, 3 guld till var och en av de andra.</li></ul></article>
+    <article class="rule panel"><span class="num">8</span><h3>Extra regler</h3><ul><li><b>Ärlighet:</b> frågar någon rakt ut svarar man ärligt. Att ljuga = nytt brott.</li><li><b>Erkänn själv:</b> halvt straff, 10 silver var.</li><li><b>Straff efter level:</b> 20s till level 29, 50s level 30–49, 1g level 50–60.</li><li><b>Återfall:</b> två brott på en vecka = dubbelt straff.</li><li><b>Loot:</b> Need om du använder det direkt, annars Greed. Lika viktigt = /roll.</li><li><b>Tvister:</b> skärmdump räcker, 2 av 3 avgör.</li><li><b>Slöfock:</b> har en spelare inte spelat på 4 dagar får de andra köra en dungeon vid valfritt tillfälle.</li></ul></article>
+  </div>
+</section>
+
+<section id="gubbar" class="band wrap">
+  <div class="sh"><h2>Välj gubbe</h2><p id="lv-sum">Levlarna laddas…</p></div>
+  <div class="week"><div><span class="small" id="cd-when">Nästa reset: torsdag kl. 00.00, svensk tid</span><b id="cd">–</b></div><p class="wk" id="wk-sum">Veckans levlar räknas från senaste reset.</p></div>
+  <div class="cs panel">
+    <div class="stage"><img id="stage-char" src="undead.jpg" width="1024" height="768" alt=""></div>
+    <div class="plate" id="plate" aria-live="polite"></div>
+    <ol class="slots" id="slots" aria-label="Välj gubbe"></ol>
+  </div>
+  <p class="small lvnote" id="lv-note"></p>
+</section>
+
+
+<section id="gosta" class="band wrap">
+  <div class="gs panel">
+    <button type="button" class="gpic" id="gosta-btn" aria-label="Klicka på Blizzgirl för ett tips"><img src="gosta.jpg" width="800" height="800" alt="Blizzgirl med glasögon och headset som vinkar"></button>
+    <div class="gtext">
+      <h2>Tips från Blizzgirl</h2>
+      <p class="small">Klicka på Blizzgirl så delar hon med sig av sin visdom.</p>
+      <p class="bubble" id="gosta-say" aria-live="polite">Klicka på mig, jag har koll på allt!</p>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap foot"><span>Gruppens sida, uppdaterad 25 november 2026.</span><span>Inofficiell fansida, inte kopplad till Blizzard.</span></footer>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const use=n=>{try{return window.claude&&window.claude.use?Promise.resolve(window.claude.use(n)).catch(()=>null):Promise.resolve(null)}catch(e){return Promise.resolve(null)}};
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* intro: CSS runs it, script only skips it */
+const intro=$('#intro');
+let seen=false;try{seen=sessionStorage.getItem('portal-sett')==='1'}catch(e){}
+const mark=()=>{try{sessionStorage.setItem('portal-sett','1')}catch(e){}};
+if(seen){intro.classList.add('gone')}
+$('#skip').addEventListener('click',()=>{intro.classList.add('skip');mark()});
+intro.addEventListener('animationend',e=>{if(e.target===intro&&e.animationName==='out'){intro.classList.add('gone');mark()}});
+
+/* embers */
+if(!seen){let eh='';for(let i=0;i<28;i++){const l=(i*37%100)+(i%3),d=(i*0.29)%4,t=3.2+(i%5)*.55,z=2+(i%3);eh+=`<span style="left:${l}%;animation-delay:${d.toFixed(2)}s;animation-duration:${t.toFixed(2)}s;width:${z}px;height:${z}px;--dx:${(i%2?1:-1)*(10+i%4*12)}px"></span>`}$('#embers').innerHTML=eh}
+
+/* stars */
+let sd=11;const rnd=()=>(sd=sd*16807%2147483647)/2147483647;
+let sh='';for(let i=0;i<90;i++){const x=rnd()*1200,y=rnd()*250,r=rnd()*1.3+.3;sh+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" opacity="${(.3+rnd()*.6).toFixed(2)}"/>`}
+const stEl=$('#stars');if(stEl)stEl.innerHTML=sh;
+
+let db=null,user=null,myId=null,isOwner=false,canWrite=null;
+
+/* characters: select screen */
+let chars=[0,1,2].map(()=>({name:'',cls:'',level:null,url:''}));
+let editing=-1,lvAt=0,lvSaving=false,shown='';
+let sel=Number(store.get('gubbe-val'));if(!(sel>=0&&sel<3))sel=0;
+const stats=()=>{const ls=chars.map(c=>c.level).filter(Number.isFinite);if(!ls.length)return null;const low=Math.min(...ls);return{low,max:low+2}};
+let wkBase=null,wkKey='';
+const SF=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Stockholm',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric',hourCycle:'h23'});
+const sthlm=()=>{const o={};for(const x of SF.formatToParts(new Date()))o[x.type]=x.value;const y=+o.year,m=+o.month,d=+o.day;return{y,m,d,h:(+o.hour)%24,mi:+o.minute,s:+o.second,dow:new Date(Date.UTC(y,m-1,d)).getUTCDay()}};
+const curWeek=()=>{const t=sthlm();return new Date(Date.UTC(t.y,t.m-1,t.d-(t.dow+3)%7)).toISOString().slice(0,10)};
+const daysToReset=t=>{let d=(11-t.dow)%7;return d===0?7:d};
+const msToReset=()=>{const t=sthlm();return daysToReset(t)*86400000-(t.h*3600+t.mi*60+t.s)*1000};
+const resetLabel=()=>{const t=sthlm();return new Date(Date.UTC(t.y,t.m-1,t.d+daysToReset(t))).toLocaleDateString('sv-SE',{timeZone:'UTC',weekday:'long',day:'numeric',month:'long'})};
+const gains=()=>chars.map((c,i)=>{const b=wkKey===curWeek()&&wkBase?Number(wkBase[i]):NaN;return Number.isFinite(c.level)&&Number.isFinite(b)?Math.max(0,c.level-b):0});
+const wkLead=()=>{const g=gains();const lo=Math.min(...g);return g.map(x=>x-lo)};
+const first=(c,i)=>(String(c.name||'').trim().split(/\s+/)[0])||'Gubbe '+(i+1);
+function renderWeek(){
+  const ms=msToReset(),d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000),sec=Math.floor(ms%60000/1000),p=n=>String(n).padStart(2,'0');
+  $('#cd').textContent=(d?`${d} d `:'')+`${h} tim ${p(m)} min ${p(sec)} s`;
+  $('#cd-when').textContent=`Nästa reset: ${resetLabel()} kl. 00.00, svensk tid`;
+}
+function renderWeekSum(){
+  const g=gains(),lead=wkLead(),bad=chars.map((c,i)=>lead[i]>2?i:-1).filter(i=>i>=0);
+  const list=chars.map((c,i)=>`${first(c,i)} +${g[i]}`).join(', ');
+  const el=$('#wk-sum');el.classList.toggle('over',bad.length>0);
+  el.textContent=bad.length?`Den här veckan: ${list}. ${bad.map(i=>first(chars[i],i)).join(' och ')} ligger mer än 2 levlar före de andra!`:`Den här veckan: ${list}. Ingen ligger mer än 2 levlar före de andra.`;
+}
+let lastWeek=curWeek();
+setInterval(()=>{renderWeek();if(curWeek()!==lastWeek){lastWeek=curWeek();renderChars()}},1000);
+renderWeek();
+const raceOf=c=>{const t=String(c.cls||'').toLowerCase();return t.includes('tauren')?'tauren':t.includes('orc')?'orc':'undead'};
+const IMG={undead:'undead.jpg',orc:'orc.jpg',tauren:'tauren.jpg'};
+const ALT={undead:'Odöd trollkarl med lysande stav framför portalen',orc:'Grönhyad krigare med stor yxa framför portalen',tauren:'Tjurhövdad krigare i rustning med sköld och stridsklubba framför portalen'};
+for(const k in IMG){const im=new Image();im.src=IMG[k]}
+const nameOf=(c,i)=>esc(c.name)||'Gubbe '+(i+1);
+function renderChars(){
+  const st=stats(),g=gains(),lead=wkLead();renderWeekSum();
+  $('#lv-sum').textContent=st?`Lägst level just nu är ${st.low}. Då får man quest-levla själv upp till level ${st.max} (regel 7).`:'Inga levlar ifyllda än.';
+  $('#t-chars').textContent=st?`Lägst: level ${st.low}`:'Inga levlar än';
+  $('#slots').innerHTML=chars.map((c,i)=>`<li><button type="button" class="slot${i===sel?' on':''}" data-i="${i}" aria-pressed="${i===sel}"><span class="face" aria-hidden="true" style="background-image:url(${IMG[raceOf(c)]})"></span><span class="sn">${nameOf(c,i)}</span><span class="sl">Level ${Number.isFinite(c.level)?c.level:'?'}${c.cls?' '+esc(c.cls):''}, +${g[i]} i veckan</span></button></li>`).join('');
+  const sc=$('#stage-char'),key=sel+'|'+raceOf(chars[sel]);
+  if(key!==shown){sc.src=IMG[raceOf(chars[sel])];sc.alt=ALT[raceOf(chars[sel])];sc.classList.remove('in');void sc.getBoundingClientRect();sc.classList.add('in');shown=key}
+  $('#lv-note').textContent=lvAt?`Levlarna är låsta och uppdateras automatiskt från armory. Senast ändrade ${new Date(lvAt).toLocaleDateString('sv-SE',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Stockholm'})}.`:'';
+  if(editing===sel&&document.getElementById('c-name-'+sel))return;
+  const c=chars[sel],i=sel,has=Number.isFinite(c.level);
+  if(editing===sel){$('#plate').innerHTML=`<label for="c-name-${i}">Namn</label><input id="c-name-${i}" maxlength="20" value="${esc(c.name)}"><label for="c-cls-${i}">Ras och klass</label><input id="c-cls-${i}" maxlength="30" value="${esc(c.cls)}"><label for="c-lvl-${i}">Level (1–60)</label><input id="c-lvl-${i}" type="number" min="1" max="60" inputmode="numeric" value="${has?c.level:''}"><div class="row"><button type="button" class="ghost" data-act="cancel">Avbryt</button><button type="button" data-act="save">Spara</button></div>`;return}
+  let pill='Väntar på level',pc='';
+  if(has&&st){if(c.level>st.max){pill=`Över gränsen med ${c.level-st.max}: 6 guld i böter`;pc='over'}else if(lead[i]>2){pill=`${lead[i]} levlar före i veckan`;pc='over'}else if(c.level===st.low){pill='Lägst i gruppen';pc='low'}else{pill='Inom gränsen'}}
+  $('#plate').innerHTML=`<h3>${nameOf(c,i)}</h3><p class="meta">Level ${has?c.level:'?'}${c.cls?', '+esc(c.cls):', ras och klass ej ifyllt'}. +${g[i]} level${g[i]===1?'':'s'} den här veckan.</p><div class="bar" role="img" aria-label="${has?'Level '+c.level+' av 60':'Okänd level'}"><i style="width:${has?(c.level/60*100).toFixed(1):0}%"></i></div><div class="row"><p class="pill ${pc}">${pill}</p><div class="acts">${c.url?`<a class="arm" href="${esc(c.url)}">Visa i armory</a>`:''}</div></div>`;
+}
+const pick=i=>{sel=(i+3)%3;store.set('gubbe-val',String(sel));editing=-1;renderChars()};
+$('#slots').addEventListener('click',e=>{const b=e.target.closest('button.slot');if(b)pick(+b.dataset.i)});
+$('#slots').addEventListener('keydown',e=>{const d={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];if(!d)return;e.preventDefault();pick(sel+d);const b=$('#slots').querySelectorAll('button.slot')[sel];if(b)b.focus()});
+$('#plate').addEventListener('click',async e=>{
+  const b=e.target.closest('button');if(!b)return;const act=b.dataset.act;
+  if(act==='edit'){return;editing=sel;renderChars();const f=document.getElementById('c-name-'+sel);if(f)f.focus();return}
+  if(act==='cancel'){editing=-1;renderChars();return}
+  if(act==='save'&&!lvSaving){
+    const i=sel;const lvRaw=document.getElementById('c-lvl-'+i).value.trim();const lv=lvRaw===''?null:Math.round(Number(lvRaw));
+    if(lv!==null&&!(lv>=1&&lv<=60)){$('#lv-note').textContent='Level måste vara mellan 1 och 60.';return}
+    if(!db){$('#lv-note').textContent='Det går inte att spara här. Öppna sidan inloggad på Claude.';return}
+    const next=chars.map(c=>({...c}));next[i]={...next[i],name:document.getElementById('c-name-'+i).value.trim().slice(0,20),cls:document.getElementById('c-cls-'+i).value.trim().slice(0,30),level:lv};
+    lvSaving=true;b.disabled=true;
+    try{if(wkKey!==curWeek()){const base=chars.map(c=>Number.isFinite(c.level)?c.level:null);await db.doc('levels/week').set({week:curWeek(),base});wkKey=curWeek();wkBase=base}await db.doc('levels/chars').set({chars:next,at:Date.now()});chars=next;lvAt=Date.now();editing=-1;renderChars()}
+    catch(err){b.disabled=false;const ro=err&&err.code==='invalid_argument';$('#lv-note').textContent=ro?'Du har bara läsrätt här. Ägaren kan bjuda in dig som redigerare.':'Det gick inte att spara. Försök igen.';if(ro){canWrite=false;editing=-1;renderChars()}}
+    finally{lvSaving=false}
+  }
+});
+renderChars();
+
+/* Blizzgirl */
+const TIPS=['Calle kan verka lite vresig.','Lyssna inte på Jim, han snackar mest i nattmössan.','Calle har en tendens att gråta mycket.','Alex räknas som top tier healer.','Alex gjorde precis en crit heal på 1000! Wow!','Som det gamla talesättet säger: lita aldrig på en shaman.'];
+const EXTRA=['Kom ihåg regel 5: googla inte. 50 silver är 50 silver.','Reparera gearen innan ni går in i en dungeon.','Har någon inte loggat in på 4 dagar? Då gäller Slöfock-regeln.'];
+const say=$('#gosta-say');let lastTip='',clicks=[];
+$('#gosta-btn').addEventListener('click',()=>{
+  const now=Date.now();clicks=clicks.filter(t=>now-t<12000);clicks.push(now);
+  let t,warn=false;
+  if(clicks.length>=7){t='Klickar du såhär mycket på mig så blir det snart böter till Alex! :(';warn=true;clicks=[]}
+  else{const pool=Math.random()<.8?TIPS:EXTRA;do{t=pool[Math.floor(Math.random()*pool.length)]}while(t===lastTip)}
+  lastTip=t;say.textContent=t;say.classList.toggle('warn',warn);say.classList.remove('pop');void say.offsetWidth;say.classList.add('pop');
+});
+
+/* levels from levels.json (updated twice a day) */
+canWrite=false;
+fetch('levels.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(b=>{
+  if(Array.isArray(b.chars))chars=[0,1,2].map(i=>{const c=b.chars[i]||{};const l=Number(c.level);const u=String(c.url||'');return{name:String(c.name||'').slice(0,20),cls:String(c.cls||'').slice(0,30),level:Number.isFinite(l)&&l>=1&&l<=60?Math.round(l):null,url:u.startsWith('https://')?u:''}});
+  lvAt=Number(b.at)||0;
+  if(b.week){wkKey=String(b.week.week||'');wkBase=Array.isArray(b.week.base)?b.week.base.slice(0,3):null}
+  renderChars();
+}).catch(()=>{$('#lv-sum').textContent='Levlarna går inte att läsa just nu.'});
+
+}
+</script>
+</body>
+</html>

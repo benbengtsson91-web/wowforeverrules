@@ -174,6 +174,23 @@ button:disabled{opacity:.5;cursor:default}
 .bubble.pop{animation:pop .3s ease-out}
 .bubble.warn{border-color:var(--red);color:#ffd9cc}
 @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.fsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-bottom:14px}
+.fsum:empty{display:none}
+.fp{padding:14px 16px;border:1px solid var(--edge);border-radius:8px;background:#191410;display:grid;gap:2px}
+.fp b{font-family:Cinzel,serif;color:var(--gold);font-size:19px}
+.fp span{color:var(--muted)}
+.fp .owe{color:var(--red)}
+.fp .get{color:#6fdc8c}
+.fines{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:12px 16px;border:1px solid #3a2e1d;border-radius:8px;background:#191410}
+.fines li.empty{display:block;color:var(--muted);font-style:italic}
+.fines li.done{opacity:.6}
+.fines .who{font-weight:600}
+.fines .amt{font-family:Cinzel,serif;font-weight:700;color:var(--red);white-space:nowrap;text-align:right}
+.fines li.done .amt{color:var(--muted);text-decoration:line-through}
+.fines .meta{grid-column:1/-1;color:var(--muted);font-size:15px}
+.fines .paid{color:#6fdc8c}
+.fines .unpaid{color:var(--red)}
 .ov{padding:clamp(14px,2vw,22px);display:grid;gap:12px}
 .ovtabs{display:flex;gap:8px;flex-wrap:wrap}
 .ovtabs button{min-height:44px;padding:8px 18px;border-radius:999px;border:1px solid var(--edge);background:#191410;color:var(--ink);font-family:Cinzel,serif;font-weight:700;font-size:15px;cursor:pointer}
@@ -440,8 +457,8 @@ function renderFines(){
   $('#t-fines').textContent=open.length?`${open.length} obetald${open.length===1?'':'a'}`:'Inga skulder';
   const P={};const add=(n,k,v)=>{n=String(n).slice(0,20);P[n]=P[n]||{owe:0,get:0};P[n][k]+=v};
   for(const f of open){const to=(Array.isArray(f.to)?f.to:[f.to]).filter(Boolean);for(const t of to){add(f.who,'owe',Number(f.amount));add(t,'get',Number(f.amount))}}
-  sum.innerHTML=Object.keys(P).map(n=>`<div class="fp"><b>${esc(n)}</b><span class="owe">Är skyldig ${fmtS(P[n].owe)}</span><span class="get">Ska få ${fmtS(P[n].get)}</span></div>`).join('');
-  list.innerHTML=items.length?items.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).map(f=>{const to=(Array.isArray(f.to)?f.to:[f.to]).filter(Boolean);return `<li class="${f.paid?'done':''}"><span class="who">${esc(f.who)} → ${to.map(esc).join(' och ')}</span><span class="amt">${fmtS(f.amount)}${to.length>1?' var':''}</span><span class="meta">${[f.reason,f.date].filter(Boolean).map(esc).join(' · ')} · ${f.paid?'<span class="paid">Betald</span>':'<span class="unpaid">Obetald</span>'}</span></li>`}).join(''):'<li class="empty">Inga böter registrerade ännu. Snyggt jobbat!</li>';
+  sum.innerHTML=Object.keys(P).map(n=>`<div class="fp"><b>${esc(n)}</b> <span class="owe">Är skyldig ${fmtS(P[n].owe)}</span> <span class="get">Ska få ${fmtS(P[n].get)}</span></div>`).join('');
+  list.innerHTML=items.length?items.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).map(f=>{const to=(Array.isArray(f.to)?f.to:[f.to]).filter(Boolean);return `<li class="${f.paid?'done':''}"><span class="who">${esc(f.who)} → ${to.map(esc).join(' och ')}</span> <span class="amt">${fmtS(f.amount)}${to.length>1?' var':''}</span> <span class="meta">${[f.reason,f.date].filter(Boolean).map(esc).join(' · ')} · ${f.paid?'<span class="paid">Betald</span>':'<span class="unpaid">Obetald</span>'}</span></li>`}).join(''):'<li class="empty">Inga böter registrerade ännu. Snyggt jobbat!</li>';
 }
 
 /* Öva dina skills: tre mot fem stenvättar */

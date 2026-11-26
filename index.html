@@ -76,7 +76,7 @@ button{font:inherit}
 .hero h1,.sh h2,.gtext h2{font-family:"Cinzel Decorative",Cinzel,Georgia,serif;font-weight:900;color:#e6c27a;text-shadow:0 -1px 0 rgba(0,0,0,.9),0 1px 0 rgba(255,231,176,.28),0 0 18px rgba(98,214,200,.16)}
 .lede{margin-top:12px;font-size:20px;color:var(--muted);max-width:24em}
 .pring{transform-box:fill-box;transform-origin:center;animation:spin 12s linear infinite}
-.menu{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:-52px}
+.menu{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px;margin-top:-52px}
 .tile{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:16px;text-decoration:none;color:var(--ink);background:linear-gradient(180deg,#261e16,#1a140f);border:1px solid var(--edge);border-radius:8px;min-height:84px;transition:transform .15s,border-color .15s}
 .tile:hover,.tile:focus-visible{border-color:var(--gold);transform:translateY(-2px);outline:none}
 .tile svg{grid-row:span 2;width:34px;height:34px;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -165,6 +165,56 @@ button:disabled{opacity:.5;cursor:default}
 .bubble.pop{animation:pop .3s ease-out}
 .bubble.warn{border-color:var(--red);color:#ffd9cc}
 @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.ov{padding:clamp(14px,2vw,22px);display:grid;gap:14px}
+.ovtabs{display:flex;gap:8px;flex-wrap:wrap}
+.ovtabs button{min-height:44px;padding:8px 20px;border-radius:999px;border:1px solid var(--edge);background:#191410;color:var(--ink);font-family:Cinzel,serif;font-weight:700;font-size:16px;cursor:pointer}
+.ovtabs button[aria-selected=true]{border-color:var(--gold);background:var(--gold);color:#1a130b}
+.ovrow{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.ovrow b{font-family:Cinzel,serif;color:var(--gold);font-size:18px}
+.ovrow span{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ovbar{position:relative;height:22px;border-radius:6px;background:var(--deep);border:1px solid var(--edge);overflow:hidden;margin-top:6px}
+.ovbar i{position:absolute;left:0;top:0;bottom:0;width:100%;transition:width .1s linear}
+.ovbar span{position:relative;display:block;padding:0 8px;font-size:14px;line-height:20px;color:#fff;text-shadow:0 1px 2px #000;white-space:nowrap;overflow:hidden}
+.ovbar.hp i{background:linear-gradient(90deg,#8e2b22,#c4462f)}
+.ovbar.cast i{background:linear-gradient(90deg,#a8874e,#e6c27a)}
+.ovbar.cast.danger i{background:linear-gradient(90deg,#b3261e,#ff6b4a)}
+.ovbar.cast.idle{opacity:.45}
+.ovarena{position:relative;min-height:240px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(10,12,14,.35),rgba(10,10,10,.75)),url(intro-bg.jpg) 50% 60%/cover;display:grid;place-items:center}
+.ovgolem{width:min(200px,48%);height:auto;margin-top:10px;transition:transform .15s}
+.ovgolem .eye{fill:#62d6c8}
+.ovarena.casting .ovgolem .eye{fill:#ff5a3c}
+.ovarena.hit .ovgolem{transform:translateX(6px)}
+.ovmsg{position:absolute;left:12px;right:12px;top:10px;margin:0;text-align:center;font-family:Cinzel,serif;font-weight:700;font-size:clamp(18px,2.6vw,24px);color:#fff;text-shadow:0 2px 6px #000;min-height:1.3em}
+.ovmsg.bad{color:#ff8a70}
+.ovmsg.good{color:#7ee8a8}
+.ovstart{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;padding:20px;background:rgba(10,8,6,.78);text-align:center}
+.ovstart p{max-width:34em;margin:0;font-size:18px}
+.ovstart[hidden]{display:none}
+.ovgo{min-height:48px;padding:10px 28px;border-radius:8px;border:1px solid var(--gold);background:var(--gold);color:#1a130b;font-family:Cinzel,serif;font-weight:700;font-size:17px;cursor:pointer}
+.ovparty{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ovpf{position:relative;text-align:left;padding:10px 12px;border-radius:8px;border:1px solid #3a2e1d;background:#191410;color:var(--ink);cursor:default}
+.ovpf.sel{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal) inset}
+.ovpf.pick{cursor:pointer}
+.ovpf.dead{opacity:.45}
+.ovpf .ovrow b{font-size:16px}
+.ovpf .ovbar.hp i{background:linear-gradient(90deg,#2f7a3e,#4cbf63)}
+.ovpf .sh{position:absolute;right:0;top:0;bottom:0;background:rgba(170,220,255,.45)}
+.ovtag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;background:#b3261e;color:#fff;font-size:13px;font-family:"Crimson Pro",serif;font-weight:600;vertical-align:middle}
+.ovres[hidden]{display:none}
+.ovres{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}
+.ovres>span{color:var(--muted);font-size:15px}
+.ovres .ovbar{margin:0}
+.ovbar.res i{background:linear-gradient(90deg,#2a5fa8,#4d8fe0)}
+.ovbar.res.rage i{background:linear-gradient(90deg,#8e2b22,#e05a3a)}
+.ovacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:8px}
+.ovab{position:relative;overflow:hidden;min-height:56px;padding:8px 10px;border-radius:8px;border:1px solid var(--gold2);background:linear-gradient(180deg,#2c2216,#1a1410);color:var(--ink);font-family:Cinzel,serif;font-weight:700;font-size:15px;cursor:pointer;text-align:left}
+.ovab small{display:block;font-family:"Crimson Pro",serif;font-weight:400;font-size:14px;color:var(--muted)}
+.ovab kbd{position:absolute;top:6px;right:8px;font-family:"Crimson Pro",serif;font-size:13px;color:var(--gold)}
+.ovab .cd{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);pointer-events:none}
+.ovab:disabled{opacity:.55;cursor:default}
+.ovab.on{border-color:var(--teal);box-shadow:0 0 0 1px var(--teal) inset}
+.ovbest{margin:0}
+@media(max-width:600px){.ovparty{gap:6px}.ovpf{padding:8px}.ovpf .ovrow b{font-size:14px}.ovarena{min-height:210px}}
 .bk{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:10px;pointer-events:none}
 .bk>*{pointer-events:auto}
 .bkfab{width:72px;height:72px;padding:0;border-radius:50%;border:2px solid var(--teal);background:#0f1d1b;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.55);transition:transform .15s}
@@ -195,7 +245,7 @@ button:disabled{opacity:.5;cursor:default}
   <button id="skip" type="button">Hoppa över</button>
 </div>
 
-<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzking</a><a href="#regler">Regler</a></nav></div></header>
+<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzking</a><a href="#ova">Öva</a><a href="#regler">Regler</a></nav></div></header>
 
 <section class="hero" id="top">
   <img class="scene" src="hero.jpg" width="1024" height="512" alt="Tre vandrare går uppför en stig mot en lysande portal i en ring av stenar">
@@ -206,6 +256,7 @@ button:disabled{opacity:.5;cursor:default}
 <nav class="menu wrap" aria-label="Snabbmeny">
   <a class="tile" href="#gubbar"><svg viewBox="0 0 32 32"><path d="M16 3l10 4v8c0 7-5 11-10 14C11 26 6 22 6 15V7Z"/><path d="M16 10v10M11 15h10"/></svg><span class="tt">Våra gubbar</span><span class="ts" id="t-chars">Levlar</span></a>
   <a class="tile" href="#gosta"><svg viewBox="0 0 32 32"><path d="M6 19v-3a10 10 0 0 1 20 0v3"/><rect x="4" y="18" width="6" height="9" rx="2"/><rect x="22" y="18" width="6" height="9" rx="2"/><path d="M25 27c0 2-3 3-7 3"/></svg><span class="tt">Blizzking</span><span class="ts">Klicka för tips</span></a>
+  <a class="tile" href="#ova"><svg viewBox="0 0 32 32"><path d="M6 26L22 10"/><path d="M19 7l6 6"/><path d="M26 26L10 10"/><path d="M13 7l-6 6"/></svg><span class="tt">Öva dina skills</span><span class="ts">Tank, heal eller DPS</span></a>
   <a class="tile" href="#regler"><svg viewBox="0 0 32 32"><path d="M8 5h17a3 3 0 0 1 0 6H22v14a3 3 0 0 1-3 3H6a3 3 0 0 1 0-6h3V8a3 3 0 0 0-1-3Z"/><path d="M13 13h5M13 17h5M13 21h4"/></svg><span class="tt">Spelregler</span><span class="ts">8 regler att följa</span></a>
 </nav>
 
@@ -219,6 +270,29 @@ button:disabled{opacity:.5;cursor:default}
     <ol class="slots" id="slots" aria-label="Välj gubbe"></ol>
   </div>
   <p class="small lvnote" id="lv-note"></p>
+</section>
+
+<section id="ova" class="band wrap">
+  <div class="sh"><h2>Öva dina skills</h2><p>Välj roll och klara en minut mot Stengolemen. Tangenterna 1–4 fungerar också.</p></div>
+  <div class="ov panel">
+    <div class="ovtabs" role="tablist" aria-label="Välj roll">
+      <button type="button" role="tab" data-role="tank" aria-selected="true">Tank</button>
+      <button type="button" role="tab" data-role="heal" aria-selected="false">Heal</button>
+      <button type="button" role="tab" data-role="dps" aria-selected="false">DPS</button>
+    </div>
+    <div class="ovtop">
+      <div class="ovboss"><div class="ovrow"><b>Stengolemen</b><span id="ov-time">60 s kvar</span></div><div class="ovbar hp"><i id="ov-bosshp"></i><span id="ov-bosstxt"></span></div><div class="ovbar cast" id="ov-castwrap"><i id="ov-cast"></i><span id="ov-casttxt"></span></div></div>
+    </div>
+    <div class="ovarena" id="ov-arena">
+      <svg class="ovgolem" id="ov-golem" viewBox="0 0 200 200" aria-hidden="true"><g fill="#4b463f" stroke="#1c1a17" stroke-width="3"><path d="M60 70L40 120L52 160L82 150L78 100Z"/><path d="M140 70L160 120L148 160L118 150L122 100Z"/><path d="M70 60L130 60L140 120L120 175L80 175L60 120Z" fill="#5a544b"/><path d="M78 20L122 20L130 58L70 58Z" fill="#625b51"/><path d="M80 175L76 195L96 195L98 175Z"/><path d="M120 175L124 195L104 195L102 175Z"/></g><path d="M88 34L96 38M112 34L104 38" stroke="#1c1a17" stroke-width="3"/><circle class="eye" cx="91" cy="42" r="4"/><circle class="eye" cx="109" cy="42" r="4"/><path d="M84 92L100 104L116 92" fill="none" stroke="#62d6c8" stroke-width="3" opacity=".8"/></svg>
+      <p class="ovmsg" id="ov-msg"></p>
+      <div class="ovstart" id="ov-start"><p id="ov-help"></p><button type="button" class="ovgo" id="ov-go">Starta</button></div>
+    </div>
+    <div class="ovparty" id="ov-party"></div>
+    <div class="ovres" id="ov-reswrap"><span id="ov-reslabel">Mana</span><div class="ovbar res"><i id="ov-res"></i><span id="ov-restxt"></span></div></div>
+    <div class="ovacts" id="ov-acts"></div>
+    <p class="small ovbest" id="ov-best"></p>
+  </div>
 </section>
 
 
@@ -337,6 +411,143 @@ $('#plate').addEventListener('click',async e=>{
   }
 });
 renderChars();
+
+/* Öva dina skills: a small one-minute fight in three roles */
+{
+const box=document.getElementById('ova');
+if(box){
+const q=s=>box.querySelector(s);
+const PARTY=[{n:'Tao',r:'Tank',max:140},{n:'Görgo',r:'DPS',max:90},{n:'Lumos',r:'Healer',max:80}];
+const ROLES={
+  tank:{me:0,help:'Du är Tao. Tryck Hån när golemen vänder sig mot någon annan, och Sköldblock medan Krossande slag laddas. Överlev en minut.',
+    ab:[{k:'taunt',n:'Hån',d:'Ta tillbaka golemen',cd:4,off:true},{k:'block',n:'Sköldblock',d:'Blockera i 2,5 s',cd:8},{k:'breath',n:'Andhämtning',d:'Hela dig själv',cd:15}]},
+  heal:{me:2,help:'Du är Lumos. Klicka på en gubbe för att välja den, och hela. Ingen får dö på en minut. Mana fylls på långsamt.',
+    ab:[{k:'flash',n:'Snabbhelning',d:'+28 liv, 1 s',cost:12},{k:'big',n:'Stor helning',d:'+65 liv, 2,2 s',cost:24},{k:'shield',n:'Skyddssköld',d:'Tar 30 skada',cd:6,cost:15}]},
+  dps:{me:1,help:'Du är Görgo. Fäll golemen innan minuten är slut. Hugg bygger ilska, Klyv slår hårt, och hoppa undan när marken skakar.',
+    ab:[{k:'hit',n:'Hugg',d:'Skada, +15 ilska'},{k:'cleave',n:'Klyv',d:'Stor skada, 40 ilska',cd:4},{k:'fury',n:'Blodvrede',d:'+30 % skada i 8 s',cd:20},{k:'jump',n:'Hoppa undan',d:'Undvik jordskalv',off:true}]}
+};
+const BOSS_HP=6000,LEN=60;
+let role='tank',S=null,timer=null,msgT=0;
+const best=r=>{try{return Number(localStorage.getItem('ova-'+r))||0}catch(e){return 0}};
+const saveBest=(r,v)=>{try{if(v>best(r))localStorage.setItem('ova-'+r,String(v))}catch(e){}};
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function say(t,c){const m=q('#ov-msg');m.textContent=t;m.className='ovmsg'+(c?' '+c:'');msgT=2.2}
+function init(){
+  S={t:0,run:false,boss:BOSS_HP,target:0,cast:null,party:PARTY.map(p=>({...p,hp:p.max,sh:0})),sel:0,mana:100,rage:0,cd:{},gcd:0,pc:null,fury:0,block:0,dodged:false,
+     next:{auto:1.6,swap:rnd(5,8),crush:rnd(6,9),rain:rnd(5,7),ember:rnd(8,11),quake:rnd(5,7),ai:1},st:{blocks:0,crushHits:0,taunts:0,friendDmg:0,healed:0,over:0,dmg:0,dodges:0,quakeHits:0}};
+  S.sel=role==='heal'?0:ROLES[role].me;
+}
+function dmgTo(i,a){const p=S.party[i];if(p.hp<=0)return;const ab=Math.min(p.sh,a);p.sh-=ab;a-=ab;p.hp=Math.max(0,p.hp-a);if(i!==0&&role==='tank')S.st.friendDmg+=a}
+function healTo(i,a){const p=S.party[i];if(p.hp<=0)return 0;const real=Math.min(a,p.max-p.hp);p.hp+=real;return real}
+function startCast(n,dur,type,danger){S.cast={n,dur,left:dur,type,danger};if(type==='quake')S.dodged=false}
+function finishCast(c){
+  if(c.type==='crush'){if(S.block>0){S.st.blocks++;say('Blockerat!','good')}else{dmgTo(0,42);S.st.crushHits++;say('Krossande slag träffade!','bad')}}
+  if(c.type==='rain'){for(let i=0;i<3;i++)dmgTo(i,Math.round(rnd(14,20)));say('Stenregn över alla!','bad')}
+  if(c.type==='quake'){if(S.dodged){S.st.dodges++;say('Snyggt undvikt!','good')}else{dmgTo(1,30);S.st.quakeHits++;say('Jordskalvet träffade Görgo!','bad')}}
+}
+function use(k){
+  if(!S||!S.run)return;const a=ROLES[role].ab.find(x=>x.k===k);if(!a)return;
+  if((S.cd[k]||0)>0)return;if(!a.off&&S.gcd>0)return;if(S.pc&&role==='heal')return;
+  if(role==='tank'){
+    if(k==='taunt'){if(S.target!==0){S.target=0;S.st.taunts++;say('Golemen är din igen!','good')}else{say('Den slår redan på dig.');return}}
+    if(k==='block'){S.block=2.5;say('Skölden uppe!')}
+    if(k==='breath'){healTo(0,35);say('Andas ut. +35 liv','good')}
+  }
+  if(role==='heal'){
+    const t=S.party[S.sel];if(t.hp<=0){say(t.n+' är redan död.','bad');return}
+    if(S.mana<a.cost){say('Inte tillräckligt med mana.','bad');return}
+    if(k==='shield'){S.mana-=a.cost;t.sh=30;say('Sköld på '+t.n)}
+    else{S.mana-=a.cost;S.pc={k,left:k==='flash'?1:2.2,dur:k==='flash'?1:2.2,amt:k==='flash'?28:65,tg:S.sel}}
+  }
+  if(role==='dps'){
+    const m=S.fury>0?1.3:1;
+    if(k==='hit'){const d=Math.round(70*m);S.boss-=d;S.st.dmg+=d;S.rage=Math.min(100,S.rage+15);hitFx()}
+    if(k==='cleave'){if(S.rage<40){say('För lite ilska.','bad');return}const d=Math.round(230*m);S.boss-=d;S.st.dmg+=d;S.rage-=40;hitFx()}
+    if(k==='fury'){S.fury=8;say('Blodvrede!','good')}
+    if(k==='jump'){if(S.cast&&S.cast.type==='quake'){S.dodged=true;say('Du hoppade undan!','good')}else{say('Inget att hoppa undan från.');return}}
+  }
+  if(a.cd)S.cd[k]=a.cd;if(!a.off)S.gcd=1;draw();
+}
+function hitFx(){const ar=q('#ov-arena');ar.classList.add('hit');setTimeout(()=>ar.classList.remove('hit'),120)}
+function tick(){
+  const dt=0.1;S.t+=dt;msgT-=dt;if(msgT<=0)q('#ov-msg').textContent='';
+  for(const k in S.cd)S.cd[k]=Math.max(0,S.cd[k]-dt);S.gcd=Math.max(0,S.gcd-dt);S.block=Math.max(0,S.block-dt);S.fury=Math.max(0,S.fury-dt);
+  const N=S.next;
+  if(S.cast){S.cast.left-=dt;if(S.cast.left<=0){const c=S.cast;S.cast=null;finishCast(c)}}
+  if(S.t>=N.auto){N.auto=S.t+1.6;const tg=role==='tank'?S.target:0;dmgTo(tg,tg===0?(role==='tank'&&S.block>0?2:(role==='heal'?9:7)):17)}
+  if(S.t>=N.ai){N.ai=S.t+1;if(role!=='heal'){healTo(0,role==='tank'?6:8);healTo(1,3);healTo(2,3)}if(role==='heal')S.mana=Math.min(100,S.mana+3.2)}
+  if(role==='tank'){
+    if(S.t>=N.swap&&!S.cast){N.swap=S.t+rnd(6,9);if(S.target===0){S.target=Math.random()<.5?1:2;say('Golemen vänder sig mot '+S.party[S.target].n+'!','bad')}}
+    if(S.t>=N.crush&&!S.cast){N.crush=S.t+rnd(8,11);startCast('Krossande slag',2,'crush',true);S.target=0}
+  }
+  if(role==='heal'){
+    if(S.t>=N.rain&&!S.cast){N.rain=S.t+rnd(7,10);startCast('Stenregn',2,'rain',true)}
+    if(S.t>=N.ember){N.ember=S.t+rnd(9,13);dmgTo(1,28);say('Görgo stod i glöden!','bad')}
+    if(S.pc){S.pc.left-=dt;if(S.pc.left<=0){const p=S.pc;S.pc=null;const r=healTo(p.tg,p.amt);S.st.healed+=r;S.st.over+=p.amt-r}}
+  }
+  if(role==='dps'){
+    if(S.t>=N.quake&&!S.cast){N.quake=S.t+rnd(7,10);startCast('Jordskalv',1.6,'quake',true);say('Marken skakar! Hoppa undan!','bad')}
+  }
+  const dead=S.party.findIndex(p=>p.hp<=0);
+  if(dead>=0)return end(false,S.party[dead].n+' dog.');
+  if(role==='dps'&&S.boss<=0)return end(true,'Golemen föll!');
+  if(S.t>=LEN)return end(role!=='dps',role==='dps'?'Tiden tog slut innan golemen föll.':'Du klarade hela minuten!');
+  draw();
+}
+function score(win){
+  const st=S.st;
+  if(role==='tank')return Math.max(0,Math.round(S.t*10+st.blocks*40+st.taunts*25-st.crushHits*30-st.friendDmg))+(win?200:0);
+  if(role==='heal')return Math.max(0,Math.round(S.t*10+st.healed-st.over/2))+(win?200:0);
+  return Math.max(0,Math.round(st.dmg/Math.max(1,S.t)*10+st.dodges*30-st.quakeHits*20))+(win?300:0);
+}
+function end(win,why){
+  S.run=false;clearInterval(timer);timer=null;draw();
+  const sc=score(win),b=best(role);saveBest(role,sc);
+  let extra='';const st=S.st;
+  if(role==='tank')extra=`Blockade ${st.blocks}, hån i tid ${st.taunts}.`;
+  if(role==='heal')extra=`Helade ${Math.round(st.healed)} liv, överhelning ${Math.round(st.over)}.`;
+  if(role==='dps')extra=`${Math.round(st.dmg/Math.max(1,S.t))} DPS, undvek ${st.dodges} jordskalv.`;
+  const start=q('#ov-start');start.hidden=false;
+  q('#ov-help').textContent=`${win?'Seger!':'Förlust.'} ${why} ${extra} Poäng: ${sc}${sc>b?' – nytt rekord!':''}`;
+  q('#ov-go').textContent='Spela igen';
+  showBest();
+}
+function showBest(){const b=best(role);q('#ov-best').textContent=b?`Ditt rekord som ${role==='heal'?'healer':role==='tank'?'tank':'DPS'}: ${b} poäng (sparas bara i din webbläsare).`:''}
+function bar(sel,pct,txt){const el=q(sel);el.style.width=Math.max(0,Math.min(100,pct))+'%';if(txt!==undefined&&el.nextElementSibling)el.nextElementSibling.textContent=txt}
+function draw(){
+  const left=Math.max(0,Math.ceil(LEN-S.t));q('#ov-time').textContent=left+' s kvar';
+  if(role==='dps')bar('#ov-bosshp',S.boss/BOSS_HP*100,Math.max(0,S.boss)+' / '+BOSS_HP);
+  else bar('#ov-bosshp',100,'Överlev tills tiden är slut');
+  const cw=q('#ov-castwrap');
+  if(S.cast){cw.className='ovbar cast'+(S.cast.danger?' danger':'');bar('#ov-cast',(1-S.cast.left/S.cast.dur)*100,S.cast.n)}
+  else if(S.pc){cw.className='ovbar cast';bar('#ov-cast',(1-S.pc.left/S.pc.dur)*100,'Du helar '+S.party[S.pc.tg].n+'…')}
+  else{cw.className='ovbar cast idle';bar('#ov-cast',0,'')}
+  q('#ov-arena').classList.toggle('casting',!!S.cast);
+  q('#ov-party').innerHTML=S.party.map((p,i)=>`<button type="button" class="ovpf${role==='heal'?' pick':''}${role==='heal'&&S.sel===i?' sel':''}${p.hp<=0?' dead':''}" data-i="${i}" ${role==='heal'?'':'tabindex="-1"'}><div class="ovrow"><b>${p.n}${i===ROLES[role].me?' (du)':''}</b>${role==='tank'&&S.target===i&&S.run?'<span class="ovtag">Mål</span>':''}</div><div class="ovbar hp"><i style="width:${p.hp/p.max*100}%"></i>${p.sh>0?`<i class="sh" style="width:${Math.min(100,p.sh/p.max*100)}%;left:auto"></i>`:''}<span>${Math.ceil(p.hp)} / ${p.max}</span></div></button>`).join('');
+  const rw=q('#ov-reswrap'),rb=q('#ov-res').parentElement;
+  if(role==='heal'){rw.hidden=false;q('#ov-reslabel').textContent='Mana';rb.className='ovbar res';bar('#ov-res',S.mana,Math.floor(S.mana)+' / 100')}
+  else if(role==='dps'){rw.hidden=false;q('#ov-reslabel').textContent='Ilska';rb.className='ovbar res rage';bar('#ov-res',S.rage,S.rage+' / 100'+(S.fury>0?' · Blodvrede':''))}
+  else{rw.hidden=false;q('#ov-reslabel').textContent='Sköld';rb.className='ovbar res';bar('#ov-res',S.block/2.5*100,S.block>0?'Sköldblock uppe':'Ingen sköld')}
+  q('#ov-acts').innerHTML=ROLES[role].ab.map((a,i)=>{const cd=S.cd[a.k]||0,g=!a.off&&S.gcd>0?S.gcd:0,w=Math.max(cd/(a.cd||1),g);const dis=!S.run||cd>0||(role==='heal'&&(S.mana<(a.cost||0)||!!S.pc))||(a.k==='cleave'&&S.rage<40);const on=(a.k==='block'&&S.block>0)||(a.k==='fury'&&S.fury>0);return `<button type="button" class="ovab${on?' on':''}" data-k="${a.k}" ${dis?'disabled':''}><kbd>${i+1}</kbd>${a.n}<small>${a.d}${cd>0?' · '+cd.toFixed(1)+' s':''}</small><span class="cd" style="height:${Math.min(1,w)*100}%"></span></button>`}).join('');
+}
+function pick(r){
+  if(timer){clearInterval(timer);timer=null}
+  role=r;for(const b of box.querySelectorAll('.ovtabs button'))b.setAttribute('aria-selected',String(b.dataset.role===r));
+  init();q('#ov-start').hidden=false;q('#ov-help').textContent=ROLES[r].help;q('#ov-go').textContent='Starta';q('#ov-msg').textContent='';draw();showBest();
+}
+function go(){init();S.run=true;q('#ov-start').hidden=true;say('Striden börjar!');draw();timer=setInterval(tick,100)}
+box.querySelector('.ovtabs').addEventListener('click',e=>{const b=e.target.closest('button[data-role]');if(b)pick(b.dataset.role)});
+q('#ov-go').addEventListener('click',go);
+q('#ov-acts').addEventListener('click',e=>{const b=e.target.closest('button[data-k]');if(b)use(b.dataset.k)});
+q('#ov-party').addEventListener('click',e=>{const b=e.target.closest('.ovpf');if(b&&role==='heal'&&S){S.sel=+b.dataset.i;draw()}});
+document.addEventListener('keydown',e=>{
+  if(!S||!S.run||/INPUT|TEXTAREA/.test((e.target&&e.target.tagName)||''))return;
+  const n=Number(e.key);const ab=ROLES[role].ab;
+  if(n>=1&&n<=ab.length){e.preventDefault();use(ab[n-1].k)}
+});
+pick('tank');
+}
+}
 
 /* Blizzking: click for a tip */
 const TIPS=['Calle kan verka lite vresig.','Lyssna inte på Jim, han snackar mest i nattmössan.','Calle har en tendens att gråta mycket.','Alex räknas som top tier healer.','Alex gjorde precis en crit heal på 1000! Wow!','Som det gamla talesättet säger: lita aldrig på en shaman.'];

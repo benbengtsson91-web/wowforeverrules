@@ -181,7 +181,7 @@ button:disabled{opacity:.5;cursor:default}
   <button id="skip" type="button">Hoppa över</button>
 </div>
 
-<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#regler">Regler</a><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzking</a></nav></div></header>
+<header class="nav"><div class="wrap navin"><a class="brand" href="#top">Gruppen</a><nav aria-label="Huvudmeny"><a href="#gubbar">Gubbar</a><a href="#gosta">Blizzking</a><a href="#regler">Regler</a></nav></div></header>
 
 <section class="hero" id="top">
   <img class="scene" src="hero.jpg" width="1024" height="512" alt="Tre vandrare går uppför en stig mot en lysande portal i en ring av stenar">
@@ -190,24 +190,11 @@ button:disabled{opacity:.5;cursor:default}
 </section>
 
 <nav class="menu wrap" aria-label="Snabbmeny">
-  <a class="tile" href="#regler"><svg viewBox="0 0 32 32"><path d="M8 5h17a3 3 0 0 1 0 6H22v14a3 3 0 0 1-3 3H6a3 3 0 0 1 0-6h3V8a3 3 0 0 0-1-3Z"/><path d="M13 13h5M13 17h5M13 21h4"/></svg><span class="tt">Spelregler</span><span class="ts">8 regler att följa</span></a>
   <a class="tile" href="#gubbar"><svg viewBox="0 0 32 32"><path d="M16 3l10 4v8c0 7-5 11-10 14C11 26 6 22 6 15V7Z"/><path d="M16 10v10M11 15h10"/></svg><span class="tt">Våra gubbar</span><span class="ts" id="t-chars">Levlar</span></a>
   <a class="tile" href="#gosta"><svg viewBox="0 0 32 32"><path d="M6 19v-3a10 10 0 0 1 20 0v3"/><rect x="4" y="18" width="6" height="9" rx="2"/><rect x="22" y="18" width="6" height="9" rx="2"/><path d="M25 27c0 2-3 3-7 3"/></svg><span class="tt">Blizzking</span><span class="ts">Klicka för tips</span></a>
+  <a class="tile" href="#regler"><svg viewBox="0 0 32 32"><path d="M8 5h17a3 3 0 0 1 0 6H22v14a3 3 0 0 1-3 3H6a3 3 0 0 1 0-6h3V8a3 3 0 0 0-1-3Z"/><path d="M13 13h5M13 17h5M13 21h4"/></svg><span class="tt">Spelregler</span><span class="ts">8 regler att följa</span></a>
 </nav>
 
-<section id="regler" class="band wrap">
-  <div class="sh"><h2>Spelregler</h2><p>Gäller våra gruppgubbar. Böterna står i rött.</p></div>
-  <div class="rules" id="rules-list">
-    <article class="rule panel"><span class="num">1</span><h3>Grundregeln</h3><p>Gruppgubbarna spelas bara när alla tre är med. Inte solo, inte bara två av er.</p></article>
-    <article class="rule panel"><span class="num">2</span><h3>Får alltid göras själv</h3><ul><li>Professions, cooking, fishing, first aid</li><li>Weapon skills på gråa mobs</li><li>AH, mail, bank, handla</li></ul><p class="note">XP av misstag är okej. Grinda, questa eller köra dungeons är det inte.</p></article>
-    <article class="rule panel"><span class="num">3</span><h3>Tillåtelse</h3><ul><li>Båda de andra måste säga ja i gruppchatten om man ska få spela själv.</li><li>Samma gäller om man ska spela 2</li><li>Max 1–2 levlar över den lägsta, sen stopp.</li><li>Ett ja gäller ett tillfälle.</li><li>Den som säger ja kan förvänta sig en liiiten present av båda spelarna som spelade.</li></ul></article>
-    <article class="rule panel"><span class="num">4</span><h3>Straff</h3><ul><li><span class="fine">20 silver</span> till var och en av de andra, via mail inom 24 timmar.</li><li>Märker ingen något inom en dag är det preskriberat.</li><li>Hamnar man över levelgränsen väntar man in de andra.</li><li>Kan man inte spela på en torsdag blir det <span class="fine">20 s i böter</span> till den eller de som kan spela.</li></ul></article>
-    <article class="rule panel"><span class="num">5</span><h3>Ingen YouTube eller googling</h3><p>Det är strikt förbjudet att kolla nyheter, guider eller hjälp på YouTube eller Google.</p><ul><li>Undantag: lite tips om hur man spelar sin gubbe. Inte mer än så.</li><li>Straff: <span class="fine">50 silver</span>.</li><li>Råkar man se något måste man ha en utomordentlig förklaring till varför man fortsatte kolla.</li></ul></article>
-    <article class="rule panel"><span class="num">6</span><h3>Lämna in quests</h3><ul><li>Man får själv lämna in quests som man har klarat.</li><li>Dingar man på det måste man säga till de andra. Inget straff.</li></ul></article>
-    <article class="rule panel new"><span class="num">7</span><h3>Quest-levla själv<span class="tag">Ny</span></h3><ul><li>Man får quest-levla själv, men max 2 levlar över den som är lägst.</li><li>Bryter man mot det: <span class="fine">6 guld i böter</span>, 3 guld till var och en av de andra.</li></ul></article>
-    <article class="rule panel"><span class="num">8</span><h3>Extra regler</h3><ul><li><b>Ärlighet:</b> frågar någon rakt ut svarar man ärligt. Att ljuga = nytt brott.</li><li><b>Erkänn själv:</b> halvt straff, 10 silver var.</li><li><b>Straff efter level:</b> 20s till level 29, 50s level 30–49, 1g level 50–60.</li><li><b>Återfall:</b> två brott på en vecka = dubbelt straff.</li><li><b>Loot:</b> Need om du använder det direkt, annars Greed. Lika viktigt = /roll.</li><li><b>Tvister:</b> skärmdump räcker, 2 av 3 avgör.</li><li><b>Slöfock:</b> har en spelare inte spelat på 4 dagar får de andra köra en dungeon vid valfritt tillfälle.</li></ul></article>
-  </div>
-</section>
 
 <section id="gubbar" class="band wrap">
   <div class="sh"><h2>Välj gubbe</h2><p id="lv-sum">Levlarna laddas…</p></div>
@@ -220,7 +207,6 @@ button:disabled{opacity:.5;cursor:default}
   <p class="small lvnote" id="lv-note"></p>
 </section>
 
-
 <section id="gosta" class="band wrap">
   <div class="gs panel">
     <button type="button" class="gpic" id="gosta-btn" aria-label="Klicka på Blizzking för ett tips"><img src="gosta.jpg" width="800" height="800" alt="Blizzking med huva och solglasögon vid datorn"></button>
@@ -229,6 +215,20 @@ button:disabled{opacity:.5;cursor:default}
       <p class="small">Klicka på Blizzking så delar han med sig av sin visdom.</p>
       <p class="bubble" id="gosta-say" aria-live="polite">Klicka på mig, jag har koll på allt!</p>
     </div>
+  </div>
+</section>
+
+<section id="regler" class="band wrap">
+  <div class="sh"><h2>Spelregler</h2><p>Gäller våra gruppgubbar. Böterna står i rött.</p></div>
+  <div class="rules" id="rules-list">
+    <article class="rule panel"><span class="num">1</span><h3>Grundregeln</h3><p>Gruppgubbarna spelas bara när alla tre är med. Inte solo, inte bara två av er.</p></article>
+    <article class="rule panel"><span class="num">2</span><h3>Får alltid göras själv</h3><ul><li>Professions, cooking, fishing, first aid</li><li>Weapon skills på gråa mobs</li><li>AH, mail, bank, handla</li></ul><p class="note">XP av misstag är okej. Grinda, questa eller köra dungeons är det inte.</p></article>
+    <article class="rule panel"><span class="num">3</span><h3>Tillåtelse</h3><ul><li>Båda de andra måste säga ja i gruppchatten om man ska få spela själv.</li><li>Samma gäller om man ska spela 2</li><li>Max 1–2 levlar över den lägsta, sen stopp.</li><li>Ett ja gäller ett tillfälle.</li><li>Den som säger ja kan förvänta sig en liiiten present av båda spelarna som spelade.</li></ul></article>
+    <article class="rule panel"><span class="num">4</span><h3>Straff</h3><ul><li><span class="fine">20 silver</span> till var och en av de andra, via mail inom 24 timmar.</li><li>Märker ingen något inom en dag är det preskriberat.</li><li>Hamnar man över levelgränsen väntar man in de andra.</li><li>Kan man inte spela på en torsdag blir det <span class="fine">20 s i böter</span> till den eller de som kan spela.</li></ul></article>
+    <article class="rule panel"><span class="num">5</span><h3>Ingen YouTube eller googling</h3><p>Det är strikt förbjudet att kolla nyheter, guider eller hjälp på YouTube eller Google.</p><ul><li>Undantag: lite tips om hur man spelar sin gubbe. Inte mer än så.</li><li>Straff: <span class="fine">50 silver</span>.</li><li>Råkar man se något måste man ha en utomordentlig förklaring till varför man fortsatte kolla.</li></ul></article>
+    <article class="rule panel"><span class="num">6</span><h3>Lämna in quests</h3><ul><li>Man får själv lämna in quests som man har klarat.</li><li>Dingar man på det måste man säga till de andra. Inget straff.</li></ul></article>
+    <article class="rule panel new"><span class="num">7</span><h3>Quest-levla själv<span class="tag">Ny</span></h3><ul><li>Man får quest-levla själv, men max 2 levlar över den som är lägst.</li><li>Bryter man mot det: <span class="fine">6 guld i böter</span>, 3 guld till var och en av de andra.</li></ul></article>
+    <article class="rule panel"><span class="num">8</span><h3>Extra regler</h3><ul><li><b>Ärlighet:</b> frågar någon rakt ut svarar man ärligt. Att ljuga = nytt brott.</li><li><b>Erkänn själv:</b> halvt straff, 10 silver var.</li><li><b>Straff efter level:</b> 20s till level 29, 50s level 30–49, 1g level 50–60.</li><li><b>Återfall:</b> två brott på en vecka = dubbelt straff.</li><li><b>Loot:</b> Need om du använder det direkt, annars Greed. Lika viktigt = /roll.</li><li><b>Tvister:</b> skärmdump räcker, 2 av 3 avgör.</li><li><b>Slöfock:</b> har en spelare inte spelat på 4 dagar får de andra köra en dungeon vid valfritt tillfälle.</li></ul></article>
   </div>
 </section>
 

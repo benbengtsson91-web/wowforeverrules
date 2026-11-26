@@ -420,7 +420,12 @@ const box=document.getElementById('ova');
 if(box){
 const q=s=>box.querySelector(s);
 const cv=q('#ov-cv'),ctx=cv.getContext('2d');
-const W=900,H=540,CX=W/2,CY=H/2,ARENA=250,BOSS_HP=8000,ENRAGE=150;
+const W=900,H=540,CX=W/2,CY=H/2,ARENA=250;
+const DIFF={
+  tank:{hp:8000,enrage:150,swing:20,crush:[9,11],crushDmg:80,rain:[8,10],rainR:60,aiHeal:22,shrug:[11,14]},
+  dps:{hp:10000,enrage:95,swing:15,crush:[12,15],crushDmg:60,rain:[6,8],rainR:66,aiHeal:26,shrug:null},
+  heal:{hp:8000,enrage:150,swing:15,crush:[12,15],crushDmg:60,rain:[8,11],rainR:58,aiHeal:0,shrug:null}};
+let D=DIFF.tank,BOSS_HP=8000,ENRAGE=150;
 const IMG={};for(const [k,src] of [['tank','tauren.jpg'],['dps','orc.jpg'],['heal','undead.jpg']]){const im=new Image();im.src=src;IMG[k]=im}
 const CROP={tank:[420,0,190],dps:[450,10,140],heal:[450,20,120]};
 const RING={tank:'#7fb0e6',dps:'#e0603a',heal:'#62d6c8'};
@@ -430,10 +435,10 @@ const TEAM=[
   {key:'heal',n:'Lumos',r:'Priest',max:100,spd:125,melee:false,auto:0,rate:9,thr:0,range:270}
 ];
 const ROLES={
-  tank:{me:0,help:'Du är Tao, warrior. Håll Stengolemen på dig: tryck 2 (Hån) om den springer mot någon annan, och 1 (Sköldblock) när Krossande slag laddas. Gå ur de röda ringarna.',
-    ab:[{k:'block',n:'Sköldblock',d:'−80 % skada i 2 s',cd:6},{k:'taunt',n:'Hån',d:'Ta aggro direkt',cd:6}]},
-  dps:{me:1,help:'Du är Görgo, shaman. Gör så mycket skada du kan: 1 är vapenattack nära golemen, 2 är en eldattack på avstånd. Slå inte för hårt för tidigt, då drar du aggro. Gå ur de röda ringarna.',
-    ab:[{k:'weapon',n:'Vapenattack',d:'Nära golemen',gcd:true},{k:'fire',n:'Eldattack',d:'På avstånd, stor skada',cd:4}]},
+  tank:{me:0,help:'Du är Tao, warrior. Håll Stengolemen på dig: tryck 2 (Hån) om den springer mot någon annan, och 1 (Sköldblock) när Krossande slag laddas. Ibland skakar den av sig ditt hot, så håll koll. Gå ur de röda ringarna.',
+    ab:[{k:'block',n:'Sköldblock',d:'−80 % skada i 2 s',cd:7},{k:'taunt',n:'Hån',d:'Ta aggro direkt',cd:8}]},
+  dps:{me:1,help:'Du är Görgo, shaman. Gör så mycket skada du kan: 1 är vapenattack nära golemen, 2 är en eldattack på avstånd. Golemen blir rasande efter 1,5 minut, så den måste falla innan dess. Slå inte för hårt för tidigt, då drar du aggro. Gå ur de röda ringarna.',
+    ab:[{k:'weapon',n:'Vapenattack',d:'Nära golemen',gcd:true},{k:'fire',n:'Eldattack',d:'På avstånd, stor skada',cd:5}]},
   heal:{me:2,help:'Du är Lumos, priest. Välj en kompis genom att klicka på den (eller Q och E). 1 helar, 2 ger en skyddsbubbla. Stå still medan du helar, och håll dig nära gruppen. Gå ur de röda ringarna.',
     ab:[{k:'heal',n:'Helning',d:'+40 liv, 1,2 s',cost:14},{k:'bubble',n:'Skyddsbubbla',d:'Tar 45 skada',cd:6,cost:20}]}
 };
@@ -447,8 +452,9 @@ let cheerT=0;
 function cheer(t,force){if(!force&&S&&S.t<cheerT)return;if(S)cheerT=S.t+3;const el=q('#ov-chat');if(!el)return;el.textContent=t;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}
 function say(t,c){const m=q('#ov-msg');m.textContent=t;m.className='ovmsg'+(c?' '+c:'');msgT=2.2}
 function init(){
+  D=DIFF[role];BOSS_HP=D.hp;ENRAGE=D.enrage;
   const pos=[[CX,CY+40],[CX+60,CY+110],[CX-80,CY+120]];
-  S={t:0,run:false,over:false,boss:{x:CX,y:CY-70,r:44,hp:BOSS_HP,tgt:0,swing:1.5,cast:null,taunt:0,face:Math.PI/2,next:{rain:rnd(7,9),crush:rnd(11,13)},enr:false},
+  S={t:0,run:false,over:false,boss:{x:CX,y:CY-70,r:44,hp:BOSS_HP,tgt:0,swing:1.5,cast:null,taunt:0,face:Math.PI/2,next:{rain:rnd(6,8),crush:rnd(D.crush[0],D.crush[1]),shrug:D.shrug?rnd(D.shrug[0],D.shrug[1]):1e9},enr:false},
      u:TEAM.map((t,i)=>({...t,i,x:pos[i][0],y:pos[i][1],rad:18,hp:t.max,threat:0,swing:rnd(0,1),cd:{},gcd:0,alive:true,sh:0,block:0,mana:100,pc:null,me:i===ROLES[role].me,tauntCd:0})),
      tele:[],fx:[],txt:[],sel:0,moveTo:null,st:{dmg:0,heal:0,pulls:0,blocks:0,crushHit:0,hitByRain:0,onMe:0}};
 }
@@ -513,7 +519,7 @@ function update(dt){
   for(const u of S.u){
     if(!u.alive)continue;u.swing-=dt;
     if(u.key==='heal'){
-      if(!u.me&&u.swing<=0){u.swing=1.25;const low=alive().filter(x=>dist(x,u)<=u.range&&x.hp<x.max*0.92).sort((a,c)=>a.hp/a.max-c.hp/c.max)[0];if(low)heal(low,26,u)}
+      if(!u.me&&u.swing<=0){u.swing=role==='tank'?1.4:1.25;const low=alive().filter(x=>dist(x,u)<=u.range&&x.hp<x.max*0.92).sort((a,c)=>a.hp/a.max-c.hp/c.max)[0];if(low)heal(low,D.aiHeal,u)}
       continue;
     }
     const can=u.melee?inMelee(u):inRange(u,b,u.range);
@@ -538,15 +544,16 @@ function update(dt){
   if(!b.cast&&tg&&tg.alive){
     b.face=Math.atan2(tg.y-b.y,tg.x-b.x);
     if(dist(b,tg)>b.r+tg.rad+8){const dx=tg.x-b.x,dy=tg.y-b.y,l=Math.hypot(dx,dy);b.x+=dx/l*78*dt;b.y+=dy/l*78*dt}
-    else{b.swing-=dt;if(b.swing<=0){b.swing=1.6;hurt(tg,(tg.key==='tank'?15:22)*(b.enr?3:1),'swing');S.fx.push({k:'slash',x:tg.x,y:tg.y,life:.2})}}
+    else{b.swing-=dt;if(b.swing<=0){b.swing=1.6;hurt(tg,(tg.key==='tank'?D.swing:22)*(b.enr?3:1),'swing');S.fx.push({k:'slash',x:tg.x,y:tg.y,life:.2})}}
   }
   // boss abilities
   if(!S.half&&b.hp<BOSS_HP/2){S.half=true;cheer('Halvvägs! Golemen vacklar.',true)}
   if(!S.near&&b.hp<BOSS_HP*.2){S.near=true;cheer('Nästan där! Ge allt nu!',true)}
-  if(!b.enr&&S.t>=ENRAGE){b.enr=true;say('Stengolemen blir rasande!','bad')}
-  if(!b.cast&&S.t>=b.next.rain){b.next.rain=S.t+rnd(8,11);b.cast={n:'Stenregn',dur:1.8,left:1.8,danger:true};for(const u of alive())S.tele.push({x:u.x,y:u.y,r:58,dur:1.8,t:0,dmg:30})}
-  else if(!b.cast&&S.t>=b.next.crush){b.next.crush=S.t+rnd(12,15);b.cast={n:'Krossande slag mot '+S.u[b.tgt].n,dur:2,left:2,danger:true,crush:b.tgt}}
-  if(b.cast){b.cast.left-=dt;if(b.cast.left<=0){const c=b.cast;b.cast=null;if(c.crush!==undefined){const t=S.u[c.crush];if(t.alive){if(t.block>0&&t.me){say('Blockerat!','good');cheer('Snyggt block! Riktig tank-känsla.',true)}else if(t.me&&role==='tank'){S.st.crushHit++;say('Krossande slag träffade!','bad');cheer('Aj! Sköldblock på 1 nästa gång.',true)}hurt(t,60,'crush');S.fx.push({k:'ring',x:t.x,y:t.y,life:.5,c:'#ff6b4a'})}}}}
+  if(S.t>=b.next.shrug){b.next.shrug=S.t+rnd(D.shrug[0],D.shrug[1]);const tk=S.u[0];tk.threat*=0.3;b.taunt=0;say('Golemen skakar av sig ditt hot!','bad');cheer('Håll koll, den kan byta mål nu!',true)}
+  if(!b.enr&&S.t>=ENRAGE){b.enr=true;say('Stengolemen blir rasande!','bad');cheer(role==='dps'?'Den är rasande! Fäll den snabbt!':'Den är rasande nu, håll ut!',true)}
+  if(!b.cast&&S.t>=b.next.rain){b.next.rain=S.t+rnd(D.rain[0],D.rain[1]);b.cast={n:'Stenregn',dur:1.8,left:1.8,danger:true};for(const u of alive())S.tele.push({x:u.x,y:u.y,r:D.rainR,dur:1.8,t:0,dmg:30})}
+  else if(!b.cast&&S.t>=b.next.crush){b.next.crush=S.t+rnd(D.crush[0],D.crush[1]);b.cast={n:'Krossande slag mot '+S.u[b.tgt].n,dur:2,left:2,danger:true,crush:b.tgt}}
+  if(b.cast){b.cast.left-=dt;if(b.cast.left<=0){const c=b.cast;b.cast=null;if(c.crush!==undefined){const t=S.u[c.crush];if(t.alive){if(t.block>0&&t.me){say('Blockerat!','good');cheer('Snyggt block! Riktig tank-känsla.',true)}else if(t.me&&role==='tank'){S.st.crushHit++;say('Krossande slag träffade!','bad');cheer('Aj! Sköldblock på 1 nästa gång.',true)}hurt(t,D.crushDmg,'crush');S.fx.push({k:'ring',x:t.x,y:t.y,life:.5,c:'#ff6b4a'})}}}}
   // telegraphs
   let rainDone=false,rainHitMe=false;
   for(const t of S.tele){t.t+=dt;if(t.t>=t.dur){rainDone=true;for(const u of alive())if(Math.hypot(u.x-t.x,u.y-t.y)<t.r+u.rad-4){hurt(u,t.dmg,'rain');if(u.me){S.st.hitByRain++;rainHitMe=true}}t.done=true}}
